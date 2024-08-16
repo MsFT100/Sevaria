@@ -5,3 +5,4 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = ['id', 'transaction_reference', 'phone_number', 'amount', 'status', 'tracking_id', 'date_created']
+        read_only_fields = ['transaction_reference']

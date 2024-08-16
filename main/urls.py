@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.Index.as_view(), name='home'),
     path('shop/', views.Shop.as_view(), name='shop'),
     path('checkout/', views.CheckOut.as_view(), name='checkout'),
+    path('paymentresult/', views.CheckOutPage.as_view(), name='pay_status'),
 ]

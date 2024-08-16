@@ -1,55 +1,85 @@
+from django.http import JsonResponse
+from django.views import View
 import requests
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from payments.forms import PaymentForm
 from .models import Payment
-from .serializers import PaymentSerializer
+
 from payments.pesapalOath import get_access_token  # Assuming this file contains the get_access_token function
 
-PESAPAL_CHECKOUT_URL = "https://www.pesapal.com/API/PostPesapalDirectOrderV4"
 
-class InitiatePayment(APIView):
+
+class InitiatePayment(View):
     def post(self, request):
-        serializer = PaymentSerializer(data=request.data)
-        if serializer.is_valid():
-            # Save the payment with a unique transaction reference
-            payment = serializer.save(transaction_reference="TRX-" + str(serializer.instance.id))
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            # Create a new payment instance
+            
+            payment = form.save()
 
             # Get a fresh access token
             token = get_access_token()
             if not token:
-                return Response({'error': 'Failed to retrieve access token.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return JsonResponse({'error': 'Failed to retrieve access token.'}, status=500)
 
             # Prepare the PesaPal request headers and payload
             headers = {
                 'Authorization': f'Bearer {token}',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
-            payload = {
-                'Amount': payment.amount,
-                'Description': f'Payment for order {payment.transaction_reference}',
-                'Type': 'MERCHANT',
-                'Reference': payment.transaction_reference,
-                'PhoneNumber': payment.phone_number,
-                'Email': request.data.get('email', 'example@example.com'),
-            }
+            # Extract data from the form
+            phone_number = form.data.get('phone_number', '')
+            email = form.data.get('email', '')
 
+            payload = {
+                "id": str(payment.transaction_reference),
+                "currency": "KES",  # Adjust currency code as per your requirement
+                "amount": float(format(payment.amount, '.2f')),
+                "description": f"Payment for order {str(payment.transaction_reference)}",
+                "callback_url": settings.PESAPAL_CALLBACK_URL,  # Ensure this is set correctly in settings
+                "notification_id": "cc29facc-5f41-4de5-bb6b-dcdf686b0ae9",  # Replace with your notification ID
+                "billing_address": {
+                    "email_address": email ,
+                    "phone_number": phone_number,
+                    "country_code": "KE",  # Adjust as needed
+                    "first_name": form.data.get('first_name', ''),
+                    "middle_name": form.data.get('middle_name', ''),
+                    "last_name": form.data.get('last_name', ''),
+                    "line_1": form.data.get('line_1', ''),
+                    "line_2": form.data.get('line_2', ''),
+                    "city": form.data.get('city', ''),
+                    "state": form.data.get('state', ''),
+                    "postal_code": form.data.get('postal_code', ''),
+                    "zip_code": form.data.get('zip_code', '')
+                }
+            }
+            print(str(payload))
             # Send request to PesaPal
             try:
-                response = requests.post(PESAPAL_CHECKOUT_URL, data=payload, headers=headers)
+                response = requests.post(settings.PESAPAL_CHECKOUT_URL, json=payload, headers=headers)
                 response.raise_for_status()
                 payment_response_data = response.json()
 
-                # Handle successful response
-                return Response(payment_response_data, status=status.HTTP_200_OK)
-            except requests.exceptions.RequestException as e:
-                return Response({'error': f'Payment initiation failed: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                # Update payment status if the response was successful
+                payment.status = 'pending'
+                payment.save()
 
+                # Return the payment URL for the user to be redirected to PesaPal
+                return JsonResponse({
+                    'redirect_url': payment_response_data.get('redirect_url'),
+                    'tracking_id': payment_response_data.get('order_tracking_id')
+                }, status=200)
+
+            except requests.exceptions.RequestException as e:
+                return JsonResponse({'error': f'Payment initiation failed: {str(e)}'}, status=500)
+        
+        return JsonResponse({'errors': form.errors}, status=400)
 
 class PaymentStatus(APIView):
     def get(self, request, transaction_reference):
@@ -79,23 +109,25 @@ class PaymentStatus(APIView):
             return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-@csrf_exempt
-@api_view(['POST'])
-def pesapal_ipn(request):
-    tracking_id = request.data.get('tracking_id')
-    transaction_reference = request.data.get('transaction_reference')
-    status = request.data.get('status')
 
-    try:
-        payment = Payment.objects.get(transaction_reference=transaction_reference)
-        payment.tracking_id = tracking_id
-        payment.status = status
-        payment.save()
+class IPNCallback(APIView):
+    def post(self, request):
+        tracking_id = request.data.get('OrderTrackingId')
+        transaction_reference = request.data.get('OrderMerchantReference')
+        status = request.data.get('status')
 
-        return Response({'message': 'Payment status updated'}, status=status.HTTP_200_OK)
-    
-    except Payment.DoesNotExist:
-        return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            payment = Payment.objects.get(transaction_reference=transaction_reference)
+            payment.tracking_id = tracking_id
+            payment.status = status
+            payment.save()
+
+            return Response({'message': 'Payment status updated'}, status=status.HTTP_200_OK)
+        
+        except Payment.DoesNotExist:
+            return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 
 # Helper function to refresh OAuth token

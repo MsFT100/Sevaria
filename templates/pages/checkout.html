@@ -1,35 +1,80 @@
 {% extends "navigation/base.html" %}
 
 {% block content %}
-
 <div class="container mt-5">
     <h2 class="text-center">Checkout</h2>
-    <form method="POST" action="{% url 'initiate_payment' %}">
+    <form id="payment-form" method="POST">
         {% csrf_token %}
         
-        <!-- Input for Amount -->
-        <div class="mb-3">
-            <label for="amount" class="form-label">Amount</label>
-            <input type="number" step="0.01" name="amount" class="form-control" id="amount" required>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" class="form-control" required>
         </div>
 
-        <!-- Input for Phone Number -->
-        <div class="mb-3">
-            <label for="phone_number" class="form-label">Phone Number</label>
-            <input type="text" name="phone_number" class="form-control" id="phone_number" required>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" class="form-control" required>
         </div>
 
-        <!-- Input for Email -->
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-control" id="email" required>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control">
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        <div class="form-group">
+            <label for="phone_number">Phone:</label>
+            <input type="text" id="phone_number" name="phone_number" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country Code:</label>
+            <input type="text" id="country" name="country" class="form-control">
+        </div>
+
+        <input type="submit" value="Pay Now" class="btn btn-primary">
     </form>
+
+    <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
 </div>
 
+<script>
+    document.querySelector('#payment-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-    
-{% endblock content %}
+        const formData = new FormData(this);
+        const errorMessage = document.getElementById('error-message');
+
+        fetch("{% url 'initiate_payment' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;  // Redirect to PesaPal payment page
+            } else {
+                errorMessage.textContent = 'Payment initiation failed: ' + data.error;
+                errorMessage.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorMessage.textContent = 'An error occurred during payment initiation. Please try again.';
+            errorMessage.classList.remove('d-none');
+        });
+    });
+</script>
+{% endblock %}

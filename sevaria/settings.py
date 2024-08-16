@@ -120,7 +120,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Assuming your static files are in a "static" directory in your project root
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -129,9 +132,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PESAPAL_SANDBOX_URL = 'https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken'
 PESAPAL_LIVE_URL = 'https://pay.pesapal.com/v3/api/Auth/RequestToken'
-PESAPAL_CONSUMER_KEY = 'qkio1BGGYAXTu2JOfm7XSXNruoZsrqEW'
-PESAPAL_CONSUMER_SECRET = 'osGQ364R49cXKeOYSpaOnT++rHs='
-
+PESAPAL_CONSUMER_KEY = 'RJTyw3yh1GGeEfFYo5T10kiD+1cvjj+T'
+PESAPAL_CONSUMER_SECRET = 'nkzkytHx8a3s4b+NwtoxQjnKb1w='
+PESAPAL_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/RegisterIPN'
+PESAPAL_LIST_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/GetIpnList'
+PESAPAL_CALLBACK_URL = 'https://10f1-41-212-45-223.ngrok-free.app/paymentresult'
+PESAPAL_CHECKOUT_URL = "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest"
 
 CSRF_TRUSTED_ORIGINS = [
     'https://10f1-41-212-45-223.ngrok-free.app',

@@ -11,7 +11,14 @@ class Index( View):
 class CheckOut(View):
     def get(self, request):
         return render(request, 'pages/checkout.html')
-    
+
+class CheckOutPage(View):
+    def get(self, request):
+        return render(request, 'pages/successfulpay.html')
 class Shop(View):
     def get(self, request):
         return render(request, 'pages/shop.html')
+    
+
+def custom_404_view(request, exception=None):
+    return render(request, 'navigation/404.html', status=404)
