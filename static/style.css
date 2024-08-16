@@ -1,0 +1,21 @@
+.column-set {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.column-unit.span-4 {
+    grid-column: span 4;
+}
+
+.column-unit.span-3 {
+    grid-column: span 3;
+}
+
+.column-unit.span-1 {
+    grid-column: span 1;
+}
+
+.text-align-right {
+    text-align: right;
+}
