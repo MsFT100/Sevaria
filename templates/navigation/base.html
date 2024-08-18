@@ -24,7 +24,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{% static 'css/style.css'%} ">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" />
+    <link rel="shortcut icon" href="{% static 'image/logo.svg'%}" />
     
     <!-- Fonts and icons -->
     <script src="{% static 'js/plugin/webfont/webfont.min.js'%} "></script>
@@ -38,7 +38,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["static/css/fonts.min.css"],
+          urls: ["{% static 'css/fonts.min.css'%}"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -89,6 +89,38 @@
 
     <!-- Kaiadmin JS -->
     <script src="{% static 'js/kaiadmin.min.js'%} "></script>
+
+
+    <script>
+      function changeImage(element) {
+          var mainImage = document.getElementById('mainImage');
+          mainImage.src = element.src;
+      }
+  
+      function openSidebar() {
+          document.getElementById('cart').classList.add('open');
+      }
+  
+      function closeSidebar() {
+          document.getElementById('cart').classList.remove('open');
+      }
+      function openNotification() {
+        document.getElementById('alertContainer').classList.add('open');
+    }
+
+    function closeNotification() {
+        document.getElementById('alertContainer').classList.remove('open');
+    }
+  </script>
+
+  <script>
+    document.getElementById('sizeSelect').addEventListener('change', function() {
+        var selectedSize = this.value;
+        var stock = {{ stock_info|safe }};
+        var maxQuantity = stock[selectedSize] || 1;
+        document.getElementById('quantityInput').setAttribute('max', maxQuantity);
+    });
+</script>
 
 </body>
 </html>

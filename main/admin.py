@@ -2,13 +2,22 @@ from django.contrib import admin
 from django.urls import path, reverse
 from django.utils.html import format_html
 from django.views.generic import DetailView
-from .models import Product, Order, OrderItem, ShippingInfo
+from .models import Product, Order, OrderItem, ProductVariant, ShippingInfo
 
 
 # Register Product with basic admin configuration
+class ProductVariantInline(admin.TabularInline):
+    model = ProductVariant
+    extra = 1
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'size', 'color', 'stock']
+    inlines = [ProductVariantInline]
+    list_display = ['name', 'price']
+
+@admin.register(ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ['product', 'size', 'color', 'stock']
 
 
 # Inline for Order Items

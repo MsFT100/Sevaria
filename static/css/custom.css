@@ -9,7 +9,7 @@
 .content{
     background-color: #35722f;
     width: 100%;
-    height: 100%;
+    height: max-content;
 }
 .content-bg{
     background-image: url('https://freight.cargo.site/t/original/i/R1895802334013024912538270497482/WhatsApp-Image-2024-07-21-at-17.51.45.jpeg');
@@ -154,4 +154,41 @@
 
 .container{
     background-color: #35722f;
+}
+.shop-product{
+	
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    text-align: left;
+    padding: 25px;
+    color: white;
+    margin: 10px 0;
+}
+
+.btn-dark{
+    background-color: black;
+    color: white;
+}
+.alert-container {
+    width: 0px;
+    height: max-content;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    padding: 5px;
+    background-color: rgba(255, 228, 196, 0.397);
+    height:max-content;
+    transition: .7s;
+    
+}
+.alert-container.open {
+    width: 300px;
+    transform: translateX(50px);
+}
+.alert-container h2 {
+    color: white;
 }

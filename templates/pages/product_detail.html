@@ -1,4 +1,350 @@
-{% include "navigation/base.html" %}
+{% extends "navigation/base.html" %}
 {% block content %}
+<style>
+    /* Container for the product detail */
+    .product-detail {
+        display: flex;
+        
+        margin: 2rem auto;
+        max-width: 1200px;
+        padding: 0.4rem;
+        background-color: #f8f8f8;
+        
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Product images section */
+    .product-images {
+        flex: 1;
+        position: relative;
+    }
+
+    .main-product-image {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumbnails {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+
+    .thumbnails img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Product information section */
+    .product-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .product-info h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: white;
+        
+    }
+    .product-info p {
+        
+        margin-bottom: 1rem;
+        color: white;
+        
+    }
+
+    .fabric-composition {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .amount {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: #666;
+    }
+
+    
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .product-detail {
+            flex-direction: column;
+        }
+
+        .product-images {
+            margin-bottom: 1rem;
+        }
+
+        .thumbnails {
+            justify-content: flex-start;
+        }
+
+        .thumbnails img {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    /* Sliding sidebar */
+    .cart {
+        width: 300px;
+        padding: 4rem;
+        background-color: #353432;
+        color: white;
+        position: fixed;
+        inset: 0 -300px 0 auto;
+        display: grid;
+        grid-template-rows: 70px 1fr 76px;
+        transition: .7s;
+    }
+    .cart.open{
+        inset: 0 0 0 auto;
+    }
+
+    .cart h1{
+        padding: 20px;
+        margin:0;
+        font-weight: 300;
+
+    }
+
+    .cart .btn{
+        display: grid;
+        grid-template-columns: repeat(2. 1fr);
+
+    }
+    .cart .btn button{
+        background-color: #E8BC0E;
+        border: none;
+        font-family: Popins;
+        font-weight: 500;
+
+    }
+
+   
+    .cart-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cart-content h3 {
+        margin-top: 1rem;
+    }
+
+    .cart-content select,
+    .cart-content input {
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        color: #333;
+    }
+
+    .cart-content button {
+        margin-top: 1rem;
+        background-color: #fff;
+        color: white;
+        border: 1px white;
+        
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        
+    }
+
+    .cart-content button:hover {
+        background-color: #e0e0e0;
+    }
+</style>
+
+<div class="content">
+    
+    
+    <div class="product-detail">
+        <div class="product-images">
+            <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" class="main-product-image">
+            <div class="thumbnails">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
+                <img src="{{ product.alternate_image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
+                <!-- Add more thumbnails if needed -->
+            </div>
+        </div>
+        
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
+            <p class="price">Price: ${{ product.price }}</p>
+            <p class="fabric-composition">Fabric composition: {{ product.description }}</p>
+            
+            <div class="shop-product">
+                <!-- Display product sizes if available -->
+                {% if product.size %}
+                    <p class="sizes">Available Sizes: {{ product.size }}</p>
+                {% endif %}
+
+                <ul>
+                    {% for variant in product.variants.all %}
+                        <li>{{ variant.size }} - {{ variant.color }} - Stock: {{ variant.stock }}</li>
+                    {% endfor %}
+                </ul>
+                
+                
+                    <button type="button"  class="btn btn-dark" onclick="openSidebar()">Add to Cart</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart" id="cart">
+    <button class="closebtn" onclick="closeSidebar()" style="background: transparent; border: none; color: white; font-size: 2rem; cursor: pointer; position: absolute; top: 10px; left: 10px;">&times;</button>
+    <div class="cart-content">
+        <h3>Select Color</h3>
+        <select id="colorSelect">
+            {% for color in colors %}
+                <option value="{{ color.0 }}">{{ color.1 }}</option>
+            {% endfor %}
+        </select>
+
+        <h3>Select Size</h3>
+        <select id="sizeSelect">
+            {% for size in sizes %}
+                <option value="{{ size.0 }}">{{ size.1 }}</option>
+            {% endfor %}
+        </select>
+
+        <h3>Select Quantity</h3>
+        <input type="number" id="quantityInput" value="1" min="1" max="">
+
+        
+        <button type="button" class="btn btn-dark" onclick="addToCart()">Add to Cart</button>
+    </div>
+</div>
+
+<div id="alertContainer" class="alert-container">
+    <h3>
+        <div id="alertMessage" class="alert" role="alert" style="display: none;">
+            <!-- Alert message will be injected here -->
+             
+        </div>
+    </h3>
+    
+</div>
+<script>
+    // Convert Django context to a JavaScript object
+    var stockInfo = {{ stock_info|safe }};
+
+    function updateMaxQuantity() {
+        var color = document.getElementById('colorSelect').value;
+        var size = document.getElementById('sizeSelect').value;
+        var quantityInput = document.getElementById('quantityInput');
+
+        // Check if the selected color and size exist in stockInfo
+        var key = size + '-' + color;
+        var maxQuantity = stockInfo[key] || 0;
+
+        // Update the max attribute of the quantity input
+        quantityInput.setAttribute('max', maxQuantity);
+
+        // Ensure the quantity is within the valid range
+        if (parseInt(quantityInput.value) > maxQuantity) {
+            quantityInput.value = maxQuantity;
+        }
+    }
+
+    // Add event listeners
+    document.getElementById('colorSelect').addEventListener('change', updateMaxQuantity);
+    document.getElementById('sizeSelect').addEventListener('change', updateMaxQuantity);
+    
+    // Initial update to set the correct max quantity on page load
+    updateMaxQuantity();
+
+
+
+    
+</script>
+
+<script>
+    // Add to cart functionality
+    function showAlert(message, type) {
+        openNotification();
+        var alertMessage = document.getElementById('alertMessage');
+        alertMessage.innerHTML = message;
+        alertMessage.className = 'alert alert-' + type;
+        alertMessage.style.display = 'block';
+        
+        // Hide the alert after 3 seconds
+        setTimeout(function() {
+            closeNotification();
+            alertMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    function addToCart() {
+        // Gather the selected options
+        var color = document.getElementById('colorSelect').value;
+        var size = document.getElementById('sizeSelect').value;
+        var quantity = document.getElementById('quantityInput').value;
+        var productId = "{{ product.id }}";  // Assuming you have the product ID in the context
+    
+        // Send the data to the server via AJAX
+        fetch("{% url 'add_to_cart' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                size: size,
+                color: color,
+                quantity: quantity,
+            })
+        })
+        .then(response => 
+        {
+            // Check if the response is JSON
+            if (!response.headers.get('content-type').includes('application/json')) {
+                throw new Error('Response is not JSON');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showAlert('Added to cart!', 'success');
+            } else {
+                showAlert(data.error || 'An error occurred', 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        console.log(stockInfo);  // See if stock info is correct
+        
+    }
+</script>
+
+
+
 
 {% endblock content %}
