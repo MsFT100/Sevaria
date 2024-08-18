@@ -1,0 +1,378 @@
+
+
+{% extends "navigation/base.html" %}
+{% block content %}
+{% load static %}
+<div class="wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar" data-background-color="dark">
+    <div class="sidebar-logo">
+      <!-- Logo Header -->
+      <div class="logo-header" data-background-color="dark">
+        <a href="{% url 'admin_dashboard' %}" class="logo">
+          <img src="{% static 'img/kaiadmin/logo_light.svg' %}" alt="navbar brand" class="navbar-brand" height="20" />
+        </a>
+        <div class="nav-toggle">
+          <button class="btn btn-toggle toggle-sidebar">
+            <i class="gg-menu-right"></i>
+          </button>
+          <button class="btn btn-toggle sidenav-toggler">
+            <i class="gg-menu-left"></i>
+          </button>
+        </div>
+        <button class="topbar-toggler more">
+          <i class="gg-more-vertical-alt"></i>
+        </button>
+      </div>
+      <!-- End Logo Header -->
+    </div>
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+      <div class="sidebar-content">
+        <ul class="nav nav-secondary">
+          <!-- Dashboard Tab -->
+          <li class="nav-item active">
+            <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+              <i class="fas fa-home"></i>
+              <p>Dashboard</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="dashboard">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a href="../demo1/index.html">
+                    <span class="sub-item">Dashboard 1</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+  
+          <!-- Sales Tab -->
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#sales">
+              <i class="fas fa-shopping-cart"></i>
+              <p>Sales</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="sales">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a href="../sales/index.html">
+                    <span class="sub-item">Sales Overview</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!-- End Sidebar -->
+
+  <div class="main-panel">
+    <div class="main-header">
+      <div class="main-header-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="index.html" class="logo">
+            <img
+              src="assets/img/kaiadmin/logo_light.svg"
+              alt="navbar brand"
+              class="navbar-brand"
+              height="20"
+            />
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="gg-menu-right"></i>
+            </button>
+            <button class="btn btn-toggle sidenav-toggler">
+              <i class="gg-menu-left"></i>
+            </button>
+          </div>
+          <button class="topbar-toggler more">
+            <i class="gg-more-vertical-alt"></i>
+          </button>
+        </div>
+        <!-- End Logo Header -->
+      </div>
+      <!-- Navbar Header -->
+      <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+        <div class="container-fluid">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <!-- Notification Icon -->
+            <li class="nav-item topbar-icon dropdown hidden-caret">
+              <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell"></i>
+                <span class="notification">4</span>
+              </a>
+              <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                <li>
+                  <div class="dropdown-title">You have 4 new notifications</div>
+                </li>
+                <li>
+                  <div class="notif-scroll scrollbar-outer">
+                    <div class="notif-center">
+                      <!-- Notification content -->
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <a class="see-all" href="#">See all notifications<i class="fa fa-angle-right"></i></a>
+                </li>
+              </ul>
+            </li>
+            
+            <!-- User Profile -->
+            <li class="nav-item topbar-user dropdown hidden-caret">
+              <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                <div class="avatar-sm">
+                  <img src="assets/img/profile.jpg" alt="Profile Image" class="avatar-img rounded-circle" />
+                </div>
+                <span class="profile-username">
+                  <span class="op-7">Hi,</span> <span class="fw-bold">Admin</span>
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-user animated fadeIn">
+                <div class="dropdown-user-scroll scrollbar-outer">
+                  <li>
+                    <div class="user-box">
+                      <div class="avatar-lg">
+                        <img src="assets/img/profile.jpg" alt="Profile Image" class="avatar-img rounded" />
+                      </div>
+                      <div class="u-text">
+                        <h4>Admin</h4>
+                        <p class="text-muted">admin@example.com</p>
+                        <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Logout</a>
+                  </li>
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <!-- End Navbar -->
+    </div>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+          <div>
+            <h3 class="fw-bold mb-3">Store Dashboard</h3>
+            <h6 class="op-7 mb-2">Manage your store products and orders</h6>
+          </div>
+          <div class="ms-md-auto py-2 py-md-0">
+            <a href="#" class="btn btn-label-info btn-round me-2">View Orders</a>
+            <a href="#" class="btn btn-primary btn-round">Add Product</a>
+          </div>
+        </div>
+    
+        <!-- Store Management Cards -->
+        <div class="row">
+          <!-- Products Management Card -->
+          <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-icon">
+                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                      <i class="fas fa-box-open"></i>
+                    </div>
+                  </div>
+                  <div class="col col-stats ms-3 ms-sm-0">
+                    <div class="numbers">
+                      <p class="card-category">Products</p>
+                      <h4 class="card-title">50</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Sales Management Card -->
+          <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-icon">
+                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                      <i class="fas fa-shopping-cart"></i>
+                    </div>
+                  </div>
+                  <div class="col col-stats ms-3 ms-sm-0">
+                    <div class="numbers">
+                      <p class="card-category">Sales</p>
+                      <h4 class="card-title">$ 5,430</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Orders Management Card -->
+          <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-icon">
+                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                      <i class="fas fa-clipboard-list"></i>
+                    </div>
+                  </div>
+                  <div class="col col-stats ms-3 ms-sm-0">
+                    <div class="numbers">
+                      <p class="card-category">Orders</p>
+                      <h4 class="card-title">120</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Customers Management Card -->
+          <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-icon">
+                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                      <i class="fas fa-user-friends"></i>
+                    </div>
+                  </div>
+                  <div class="col col-stats ms-3 ms-sm-0">
+                    <div class="numbers">
+                      <p class="card-category">Customers</p>
+                      <h4 class="card-title">320</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Order Details and Product Management -->
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card card-round">
+              <div class="card-header">
+                <div class="card-head-row">
+                  <div class="card-title">Recent Orders</div>
+                  <div class="card-tools">
+                    <a href="#" class="btn btn-label-info btn-round btn-sm">View All</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Orders Table (can be replaced with dynamic data) -->
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#1023</td>
+                      <td>John Doe</td>
+                      <td>$120.00</td>
+                      <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>#1024</td>
+                      <td>Jane Smith</td>
+                      <td>$75.00</td>
+                      <td><span class="badge bg-warning">Pending</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Add Product Section -->
+          <div class="col-md-4">
+            <div class="card card-primary card-round">
+              <div class="card-header">
+                <div class="card-head-row">
+                  <div class="card-title">Add Product</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+                  </div>
+                  <div class="form-group">
+                    <label for="productPrice">Price</label>
+                    <input type="number" class="form-control" id="productPrice" placeholder="Enter product price">
+                  </div>
+                  <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <select class="form-control" id="productCategory">
+                      <option>Clothing</option>
+                      <option>Electronics</option>
+                      <option>Accessories</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-round">Add Product</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <footer class="footer">
+      <div class="container-fluid d-flex justify-content-between">
+        <nav class="pull-left">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.themekita.com">
+                ThemeKita
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"> Help </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"> Licenses </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="copyright">
+          2024, made with <i class="fa fa-heart heart text-danger"></i> by
+          <a href="http://www.themekita.com">ThemeKita</a>
+        </div>
+        <div>
+          Distributed by
+          <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  
+</div>
+      
+       
+        
+{% endblock content %}
