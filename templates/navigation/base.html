@@ -49,14 +49,14 @@
     
 </head>
 <body>
-    {% load static %}
-    {% include "navigation/navigation.html" %}
-    {% block content %}
     
-    {% endblock content %}
-    {% include 'navigation/footer.html' %}
-
-
+    
+    <main>
+      {% include "navigation/navigation.html" %}
+      {% block content %} {% endblock content %}
+      {% include 'navigation/footer.html' %}
+    </main>
+  
     <!--   Core JS Files   -->
     <script src="{% static 'js/core/jquery-3.7.1.min.js '%} "></script>
     <script src="{% static 'js/core/popper.min.js '%} "></script>

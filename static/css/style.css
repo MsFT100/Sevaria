@@ -20,7 +20,7 @@ body {
 .column-set {
     display: flex;
     flex-wrap: nowrap;
-    gap: 0.0rem;
+    
 }
 
 .column-unit {

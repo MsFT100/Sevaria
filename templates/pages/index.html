@@ -1,26 +1,7 @@
-
+{% extends "navigation/base.html" %}
 {% block content %}
-<main class="page-content">
-    <div class="content-bg">
-        <nav class="navbar">
-            <ul class="navbar-menu">
-                <li class="dropdown">
-                    <a href="#">DropdownNavBar</a>
-                    <ul class="dropdown-content">
-                        <li><a href="{% url "shop" %}">Shop</a></li>
-                        <li><a href="{% url "home" %}">Project</a></li>
-                        <li><a href="{% url "home" %}">About</a></li>
 
-                    </ul>
-                </li>
-            </ul>
-            <div class="navbar-title">
-                <a href=" {% url 'home' %}">SEVARIA FASHIONS</a>
-            </div>
-            <ul class="navbar-menu">
-                <li><a href="{% url 'home' %}">Cart</a></li>
-            </ul>
-        </nav>
-    </div>
-</main>
+<div class="content">
+
+</div>
 {% endblock content %}

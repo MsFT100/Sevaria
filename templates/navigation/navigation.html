@@ -1,29 +1,34 @@
 {% block content %}
-<column-set class="column-set" gutter="0.0rem" mobile-stack="false">
-    <column-unit slot="0" span="2">
-        <span class="menu-icon">
-            <a class="icon-link" href="dropdown" rel="history">
-                <text-icon icon="menu-1"></text-icon>
-            </a>
-        </span>
-    </column-unit>
-    <column-unit slot="1" span="7">
-        <div class="center-text">
-            <a href="about" rel="history" class="main-link">SEVARIA FASHIONS</a>
-            <a class="icon-link" href="about" rel="history">
-                <text-icon icon="north-east-arrow"></text-icon>
-            </a>
-        </div>
-        <div class="right-text">
-            <a href="#" rel="show-cart"></a>
-        </div>
-    </column-unit>
-    <column-unit slot="2" span="3">
-        <div class="right-text">
-            <text-icon icon="cart-2"></text-icon>
-            <a href="#" rel="show-cart" show-count="true" class="cart-link"></a>
-        </div>
-    </column-unit>
-</column-set>
-<br>
+
+<header>
+    <column-set class="column-set" gutter="0.0rem" mobile-stack="false">
+        <column-unit slot="0" span="2">
+            <span class="menu-icon">
+                <a class="icon-link" href="dropdown" rel="history">
+                    <text-icon icon="menu-1"></text-icon>
+                </a>
+            </span>
+        </column-unit>
+        <column-unit slot="1" span="7">
+            <div class="center-text">
+                <a href="about" rel="history" class="main-link">SEVARIA FASHIONS</a>
+                <a class="icon-link" href="about" rel="history">
+                    <text-icon icon="north-east-arrow"></text-icon>
+                </a>
+            </div>
+            <div class="right-text">
+                <a href="#" rel="show-cart"></a>
+            </div>
+        </column-unit>
+        <column-unit slot="2" span="3">
+            <div class="right-text">
+                <text-icon icon="cart-2"></text-icon>
+                <a href="#" rel="show-cart" show-count="true" class="cart-link"></a>
+            </div>
+        </column-unit>
+    </column-set>
+
+</header>
+
+
 {% endblock content %}
