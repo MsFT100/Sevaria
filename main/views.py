@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import View
+from django.views.generic import DetailView
 
 from main.models import Product
 
@@ -24,11 +25,14 @@ class Shop(View):
         products = Product.objects.all()
         return render(request, 'pages/shop.html', {'products': products})
 
-class Productdetail(View):
-    def get(request, product_id):
-        product = get_object_or_404(Product, id=product_id)
-        return render(request, 'ecommerce/product_detail.html', {'product': product})
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'pages/product_detail.html'
+    context_object_name = 'product'
 
+    def get_object(self, queryset=None):
+        product_id = self.kwargs.get('product_id')
+        return super().get_object(queryset)  
 
 class AdminLogin(View):
     def get(self, request):
