@@ -3,7 +3,6 @@
 * {
     margin: 0;
     padding: 0;
-    background-image: url(https://freight.cargo.site/t/original/i/K1906765537889245625281103067850/SEVARIA-183-copy.jpg);
 }
 
 body {
@@ -15,41 +14,65 @@ body {
 	border-right-width: 1rem;
 	border-bottom-width: 1rem;
 	border-left-width: 1rem;
-}
-
-.column-set {
+    font-family: 'Rosario', sans-serif;
+nav {
     display: flex;
-    flex-wrap: nowrap;
-    
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333; /* Background color of the nav bar */
 }
 
-.column-unit {
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.hover-effect {
+    color: rgba(255, 37, 37, 0.97);
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.hover-effect:hover {
+    color: #ffffff;
+    background-color: #007BFF;
+}
+
+nav column-unit {
     flex: 1;
 }
 
-.menu-icon a {
-    color: rgba(255, 37, 37, 0.97);
-}
-
-.center-text {
-    text-align: center;
-}
-
-.main-link {
-    color: rgba(241, 9, 9, 0.97);
-    text-decoration: none;
-}
-
 .icon-link {
-    color: rgba(255, 37, 37, 0.97);
-    text-decoration: none;
+    margin-left: 5px;
 }
 
-.right-text {
-    text-align: right;
-}
-
-.cart-link {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
+nav div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
