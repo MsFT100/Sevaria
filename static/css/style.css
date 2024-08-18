@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Rosario:ital,wght@0,300..700;1,300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    background-image: url(https://freight.cargo.site/t/original/i/K1906765537889245625281103067850/SEVARIA-183-copy.jpg);
+}
+
+body {
+    align-items: flex-start;
+	border-width: 0rem;
+	border-color: rgba(242, 235, 20, 0.97);
+	border-style: solid;
+	border-top-width: 1rem;
+	border-right-width: 1rem;
+	border-bottom-width: 1rem;
+	border-left-width: 1rem;
+}
+
+.column-set {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.0rem;
+}
+
+.column-unit {
+    flex: 1;
+}
+
+.menu-icon a {
+    color: rgba(255, 37, 37, 0.97);
+}
+
+.center-text {
+    text-align: center;
+}
+
+.main-link {
+    color: rgba(241, 9, 9, 0.97);
+    text-decoration: none;
+}
+
+.icon-link {
+    color: rgba(255, 37, 37, 0.97);
+    text-decoration: none;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.cart-link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
