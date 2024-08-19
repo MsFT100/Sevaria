@@ -45,16 +45,34 @@
         },
       });
     </script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 </head>
 <body>
     
     
-    <main>
+    <main class="container-full">
       {% include "navigation/navigation.html" %}
       {% block content %} {% endblock content %}
       {% include 'navigation/footer.html' %}
+      <!-- Floating Cart Container -->
+      <div class="cart-a-container" id="cart-a">
+        <span class="close-btn" onclick="closeCart()">×</span>
+        <div class="cart-a-content">
+            <h3>Your Cart</h3>
+            <!-- Sample Cart Items -->
+            
+          <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+          </div>
+
+          <div class="cart-footer">
+            <p>Total: $<span id="cartTotal">0</span></p>
+            <button class="checkout-btn">Checkout</button>
+        </div> 
+
+        </div>
+      </div>
     </main>
   
     <!--   Core JS Files   -->
@@ -114,13 +132,63 @@
   </script>
 
   <script>
-    document.getElementById('sizeSelect').addEventListener('change', function() {
-        var selectedSize = this.value;
-        var stock = {{ stock_info|safe }};
-        var maxQuantity = stock[selectedSize] || 1;
-        document.getElementById('quantityInput').setAttribute('max', maxQuantity);
-    });
-</script>
+    function openCart() {
+        const cart = document.getElementById("cart-a");
+        populateCart();
+        cart.style.display = "block";
+        cart.classList.remove("closing");
+        setTimeout(() => {
+            cart.style.transform = "translate(-50%, -50%) scale(1)";
+        }, 10); // Trigger reflow to ensure animation
+    }
+
+    function closeCart() {
+        const cart = document.getElementById("cart-a");
+        cart.classList.add("closing");
+        cart.style.transform = "scale(0.1) translate(1100%, -1150%)";
+        setTimeout(() => {
+            cart.style.display = "none";
+        }, 600); // Match with animation duration
+    }
+
+    //populate the cart
+    function populateCart() {
+      const cartItemsContainer = document.getElementById('cartItems');
+      cartItemsContainer.innerHTML = ''; // Clear existing items
+      
+      fetch('/get-cart-items/')  // An endpoint to get the cart items
+          .then(response => response.json())
+          .then(data => {
+            console.log('Cart data:', data);
+              let total = 0;
+              data.cart.forEach(item => {
+                console.log(item);
+                  const itemElement = document.createElement('div');
+                  itemElement.classList.add('cart-item');
+                  itemElement.innerHTML = `
+                      <img src="${item.image_url}" alt="${item.name}">
+                      <div class="cart-item-details">
+                          <p>${item.name}</p>
+                          <p>Price: $${item.price}</p>
+                          <p>Quantity: ${item.quantity}</p>
+                          <p>Size: ${item.size}</p>
+                          <p>Color: ${item.color}</p>
+                      </div>
+                  `;
+                  cartItemsContainer.appendChild(itemElement);
+                  
+                  // Update total
+                  total += parseFloat(item.price) * item.quantity;
+              });
+  
+              // Update total price in the cart footer
+              document.getElementById('cartTotal').textContent = total.toFixed(2);
+          })
+          .catch(error => console.error('Error fetching cart:', error));
+  }
+  
+  </script>
+  
 
 </body>
 </html>

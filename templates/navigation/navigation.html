@@ -1,36 +1,27 @@
+{% load static %}
 {% block content %}
 
 <header>
+  <nav>
     <div class="dropdown">
-        <a href="#" id="dropdownMenu">
-            &#9776;
-        </a>
-        <div class="dropdown-content">
-            <a href="#shops">Shops</a>
-            <a href="#bags">Bags</a>
-        </div>
+      <a href="#" id="dropdownMenu" class="hover-effect">&#9776;</a>
+      <div class="dropdown-content">
+        <a href="{% url 'home' %}">Home &#8599;</a>
+        <a href="{% url 'shop' %}">Shops &#8599;</a>
+        <a href="#">Bags &#8599;</a>
+      </div>
     </div>
-    <column-unit span="7">
-        <div style="text-align: center">
-          <a href="about" rel="history" class="hover-effect">SEVARIA FASHIONS</a>
-          <a class="icon-link hover-effect" href="about" rel="history">
-            <text-icon icon="north-east-arrow"></text-icon>
-          </a>
-        </div>
-        <column-unit slot="1" span="7">
-            <div style="text-align: right">
-              <a href="#" rel="show-cart" class="hover-effect"></a>
-            </div>
-          </column-unit>
-          
-          <column-unit slot="2" span="3">
-            <div style="text-align: right">
-              <text-icon icon="cart-2"></text-icon>
-              <a href="#" rel="show-cart" show-count="true" class="hover-effect"></a>
-            </div>
-          </column-unit>
+    
+    <div class="brand">
+      <a href="{% url 'about' %}" class="hover-effect">SEVARIA FASHIONS  &#8599;</a>
+    </div>
+    
+    <div class="icons">
       
+      <a href="#" class="hover-effect" ><i class="fa fa-shopping-cart" onclick="openCart()"></i></a>
+    </div>
+  </nav>
+  
 </header>
-
 
 {% endblock content %}

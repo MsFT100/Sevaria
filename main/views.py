@@ -56,6 +56,12 @@ class ProductDetail(DetailView):
         
         return context
 
+
+class About(View):
+    def get(self, request):
+        return render(request, 'pages/about.html')
+    
+
 class AdminLogin(View):
     def get(self, request):
         return render(request, 'admin/login.html')
@@ -106,18 +112,40 @@ class AddToCartView(View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseNotAllowed(['POST'])
-    
+
+
 def cart_view(request):
     cart = request.session.get('cart', {})
     cart_items = []
-    
-    for key, item in cart.items():
+
+    for item in cart.values():
+        # Get the product based on the product_id in the cart
         product = get_object_or_404(Product, id=item['product_id'])
+        
+        # Append the product details along with the cart item data
         cart_items.append({
-            'product': product,
+            'name': product.name,
+            'price': str(product.price),
+            'quantity': item['quantity'],
             'size': item['size'],
             'color': item['color'],
-            'quantity': item['quantity']
+            'image_url': product.image.url if product.image else '/static/default-image.jpg'
         })
-    
-    return render(request, 'pages/cart.html', {'cart_items': cart_items})
+
+    return JsonResponse({'cart': cart_items})
+
+
+#def cart_view(request):
+#    cart = request.session.get('cart', {})
+#    cart_items = []
+#    
+#    for key, item in cart.items():
+#        product = get_object_or_404(Product, id=item['product_id'])
+#        cart_items.append({
+#            'product': product,
+#            'size': item['size'],
+##            'color': item['color'],
+ #           'quantity': item['quantity']
+ #       })
+ #   
+ #   return render(request, 'pages/cart.html', {'cart_items': cart_items})
