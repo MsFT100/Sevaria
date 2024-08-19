@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from .models import Payment
+from main.models import Order
 
-class PaymentForm(ModelForm):
+class CheckoutForm(ModelForm):
     class Meta:
-        model = Payment
-        fields = ['phone_number', 'amount', 'email', 'country', 'first_name', 'last_name']
+        model = Order
+        fields = ['shipping_address', 'total_price']
         

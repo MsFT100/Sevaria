@@ -58,20 +58,23 @@
       <!-- Floating Cart Container -->
       <div class="cart-a-container" id="cart-a">
         <span class="close-btn" onclick="closeCart()">×</span>
+        <h3>Cart</h3>
         <div class="cart-a-content">
-            <h3>Your Cart</h3>
-            <!-- Sample Cart Items -->
             
+            <!-- List Cart Items -->         
           <div class="cart-items" id="cartItems">
             <!-- Cart items will be populated here -->
           </div>
 
-          <div class="cart-footer">
-            <p>Total: $<span id="cartTotal">0</span></p>
-            <button class="checkout-btn">Checkout</button>
-        </div> 
-
         </div>
+
+        <div class="cart-footer">
+          <p>Total: $<span id="cartTotal">0</span></p>
+          
+            
+            <a href="{% url "checkout-api" %}" class="checkout-btn">Proceed to Payment</a>
+          
+        </div> 
       </div>
     </main>
   

@@ -1,9 +1,9 @@
 {% extends "navigation/base.html" %}
-
+{% load static %}
 {% block content %}
 <div class="column-set">
     <div class="column-unit" style="flex: 1 1 25%;">
-        <img class="zoomable" src="path_to_image" alt="Jamie Bryan Kimani">
+        <img class="zoomable" src="{% static 'image/jamie.jpg' %}" alt="Jamie Bryan Kimani">
         <span class="caption">Jamie Bryan Kimani.</span>
         <p>Creative Director</p>
     </div>
