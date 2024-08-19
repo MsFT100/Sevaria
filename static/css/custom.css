@@ -301,3 +301,40 @@
     transition: transform 0.6s ease-in-out;
 }
 
+.column-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.column-unit {
+    box-sizing: border-box;
+    padding: 1rem;
+}
+.column-unit span {
+    display: block;
+}
+.column-unit img {
+    max-width: 100%;
+    height: auto;
+}
+.caption {
+    color: rgb(255, 170, 1);
+}
+.contact-info a {
+    color: rgb(255, 197, 8);
+    text-decoration: none;
+}
+.contact-info a:hover {
+    text-decoration: underline;
+}
+.brand-description h1 {
+    color: rgba(255, 37, 37, 0.97);
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+@media (max-width: 768px) {
+    .column-unit {
+        flex: 1 1 100%;
+    }
+}
+
