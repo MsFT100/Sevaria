@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Rosario:ital,wght@0,300..700;1,300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rosario', sans-serif;
+    border: 1rem solid rgba(242, 235, 20, 0.97);
+    background-color: #35722f;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #35722f;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    min-width: max-content;
+    
+    z-index: 1;
+    transition: .7s;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: rgba(255, 37, 37, 0.97);
+    padding: 6px 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    position: relative; /* Ensure that pseudo-element is positioned relative to this element */
+    overflow: hidden; /* Hide the overflow to show only the visible part of the pseudo-element */
+    border-bottom: 2px solid transparent; /* Invisible border for normal state */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Pseudo-element for the underline animation */
+.dropdown-content a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%; /* Full width */
+    height: 2px; /* Match border thickness */
+    background-color: #007BFF; /* Color of the filling animation */
+    transform: translateX(-100%); /* Start off-screen to the left */
+    transition: transform 0.3s ease; /* Animate the transformation */
+}
+
+/* On hover, animate the filling effect */
+.dropdown-content a:hover::after {
+    transform: translateX(0); /* Move to full width */
+}
+
+.dropdown-content a:hover {
+    color: white;
+    background-color: #05050562;
+}
+
+.hover-effect {
+    color: rgba(255, 37, 37, 0.97);
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-bottom: 2px solid transparent; /* Default border for the effect */
+}
+
+.hover-effect:hover {
+    color: white; /* Text color on hover */
+    border-bottom: 2px solid #007BFF; /* Blue underline on hover */
+}
+
+.brand {
+    text-align: center;
+    flex: 1;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+
+.icon-link {
+    margin-left: 5px;
+}

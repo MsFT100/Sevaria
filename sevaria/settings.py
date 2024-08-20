@@ -126,6 +126,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # Assuming your static files are in a "static" directory in your project root
 ]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 # Default primary key field type

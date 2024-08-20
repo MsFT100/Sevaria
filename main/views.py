@@ -134,18 +134,8 @@ def cart_view(request):
 
     return JsonResponse({'cart': cart_items})
 
-
-#def cart_view(request):
-#    cart = request.session.get('cart', {})
-#    cart_items = []
-#    
-#    for key, item in cart.items():
-#        product = get_object_or_404(Product, id=item['product_id'])
-#        cart_items.append({
-#            'product': product,
-#            'size': item['size'],
-##            'color': item['color'],
- #           'quantity': item['quantity']
- #       })
- #   
- #   return render(request, 'pages/cart.html', {'cart_items': cart_items})
+def clear_cart(request):
+    if request.method == 'POST':
+        request.session['cart'] = {}
+        return JsonResponse({'success': True, 'message': 'Cart has been cleared.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})

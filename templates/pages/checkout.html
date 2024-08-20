@@ -1,68 +1,78 @@
 {% extends "navigation/base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center">Checkout</h2>
+
+<style>
+    label{
+        color: white;
+    }
+</style>
+
+<div class="container-md">
+    <div class="custom-container">
+        <h2 class="text-center">Checkout</h2>
     
-    <form id="payment-form" method="POST">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="shipping_address">Shipping Address:</label>
-            <textarea id="shipping_address" name="shipping_address" class="form-control" required>{{ form.shipping_address.value }}</textarea>
-        </div>
-
-        <!-- Display cart items -->
-        <div class="cart-items">
-            {% for item in cart_items %}
-            <div class="cart-item">
-                <img src="{{ item.image_url }}" alt="{{ item.name }}">
-                <div class="cart-item-details">
-                    <p>Name: {{ item.name }}</p>
-                    <p>Price: {{ item.price }}</p>
-                    <p>Quantity: {{ item.quantity }}</p>
-                    <p>Size: {{ item.size }}</p>
-                    <p>Color: {{ item.color }}</p>
-                </div>
+        <form id="payment-form" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="shipping_address" >Shipping Address:</label>
+                <textarea id="shipping_address" name="shipping_address" class="form-control" required>{{ form.shipping_address.value }}</textarea>
             </div>
-            {% endfor %}
-        </div>
 
-        <div class="form-group">
-            <label for="total_price">Total Price:</label>
-            <input type="text" id="total_price" name="total_price" class="form-control" value="{{ total_price }}" readonly>
-        </div>
-        
-        <!-- Other form fields -->
-        <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
-        </div>
+            <!-- Display cart items 
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}">
+                    <div class="cart-item-details">
+                        <p>Name: {{ item.name }}</p>
+                        <p>Price: {{ item.price }}</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Size: {{ item.size }}</p>
+                        <p>Color: {{ item.color }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>-->
 
-        <div class="form-group">
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
-        </div>
+            <div class="form-group">
+                <label for="total_price" style="color: white; font-size: 20px;">Total Price:</label>
+                <input type="text" id="total_price" name="total_price" class="form-control" value="{{ total_price }}" readonly>
+            </div>
+            
+            <!-- Other form fields -->
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
-        </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="phone_number">Phone:</label>
-            <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.profile.phone_number }}" required>
-        </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="country">Country Code:</label>
-            <input type="text" id="country" name="country" class="form-control" value="KE" required>
-        </div>
+            <div class="form-group">
+                <label for="phone_number">Phone:</label>
+                <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.profile.phone_number }}" required>
+            </div>
 
-        <input type="submit" value="Pay Now" class="btn btn-primary">
-    </form>
+            <div class="form-group">
+                <label for="country">Country Code:</label>
+                <input type="text" id="country" name="country" class="form-control" value="KE" required>
+            </div>
 
-    <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
+            <input type="submit" value="Pay Now" class="btn btn-primary">
+        </form>
+
+        <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
+    </div>
+    
 </div>
 
 <script>

@@ -110,6 +110,7 @@ class CheckoutView(View):
                 "amount": float(order.total_price),
                 "description": f"Payment for order {order.id}",
                 "callback_url": settings.PESAPAL_CALLBACK_URL,
+                "notification_id": "cc29facc-5f41-4de5-bb6b-dcdf686b0ae9",
                 "billing_address": {
                     "email_address": email,
                     "phone_number": phone_number,
