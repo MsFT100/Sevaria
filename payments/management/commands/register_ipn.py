@@ -5,7 +5,7 @@ from payments.pesapalOath import get_access_token
 from django.conf import settings
 
 class Command(BaseCommand):
-    help = 'Register IPN URL with Pesapal'
+    help = 'Fetching PesaPal Ipns'
     
     def handle(self, *args, **options):
         token = get_access_token()  # Call the function with parentheses
@@ -20,13 +20,13 @@ class Command(BaseCommand):
             'Content-Type': 'application/json',
         }
         data = {
-            'url': 'https://10f1-41-212-45-223.ngrok-free.app/api/payments/ipn/',  # Your IPN URL
+            'url': 'https://sevaria.co.ke/api/payments/ipn/',  # Your IPN URL
             'ipn_notification_type': 'POST',
         }
         response = requests.post(url, json=data, headers=headers)
         if response.status_code == 200:
-            self.stdout.write(self.style.SUCCESS("IPN URL registered successfully."))
+            self.stdout.write(self.style.SUCCESS("IPN URL Fetched successfully."))
             self.stdout.write(str(response.json()))
         else:
-            self.stdout.write(self.style.ERROR("Failed to register IPN URL."))
+            self.stdout.write(self.style.ERROR("Failed to Fetch IPN URL."))
             self.stdout.write(response.text)

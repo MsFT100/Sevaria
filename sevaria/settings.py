@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Assuming your static files are in a "static" directory in your project root
 ]
-
+#iLqTaSb4TijW4Jg
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = 'media/'
@@ -141,12 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PESAPAL_SANDBOX_URL = 'https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken'
 PESAPAL_LIVE_URL = 'https://pay.pesapal.com/v3/api/Auth/RequestToken'
-PESAPAL_CONSUMER_KEY = 'RJTyw3yh1GGeEfFYo5T10kiD+1cvjj+T'
-PESAPAL_CONSUMER_SECRET = 'nkzkytHx8a3s4b+NwtoxQjnKb1w='
+PESAPAL_CONSUMER_KEY = 'BnuTtCuLgwmXkkoF+XCyiTtuwq6KCMiE'
+PESAPAL_CONSUMER_SECRET = 'fwfTZT+Hp+51FqKVJlEmoaSOg+s='
 PESAPAL_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/RegisterIPN'
 PESAPAL_LIST_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/GetIpnList'
 PESAPAL_CALLBACK_URL = 'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net/paymentresult'
 PESAPAL_CHECKOUT_URL = "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest"
+IPN_ID = '16eef5c4-dc67-423c-8b44-dcd9cd412a17'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',

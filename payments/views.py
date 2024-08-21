@@ -172,7 +172,7 @@ class InitiatePayment(View):
                 "amount": float(format(payment.amount, '.2f')),
                 "description": f"Payment for order {str(payment.transaction_reference)}",
                 "callback_url": settings.PESAPAL_CALLBACK_URL,  # Ensure this is set correctly in settings
-                "notification_id": "cc29facc-5f41-4de5-bb6b-dcdf686b0ae9",  # Replace with your notification ID
+                "notification_id": settings.IPN_ID,  # Replace with your notification ID
                 "billing_address": {
                     "email_address": email ,
                     "phone_number": phone_number,
