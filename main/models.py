@@ -5,9 +5,15 @@ from django.contrib.auth.models import User
 
 
 class Product(models.Model):
+
+    CATEGORY = [
+        ('DRESS', 'Dress'),
+        ('BAGS', 'Bags'),
+    ]
     name = models.CharField(max_length=255)
     description = models.TextField(default='null')
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.CharField(max_length=50, choices=CATEGORY, default='DRESS')
     image = models.ImageField(upload_to='product_images/')
     alternate_image = models.ImageField(upload_to='product_images/')
 

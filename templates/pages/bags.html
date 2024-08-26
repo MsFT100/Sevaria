@@ -1,0 +1,58 @@
+{% extends "navigation/base.html" %}
+
+{% load static %}
+{% block content %}
+
+    <div class="content">
+        <div class="product-grid">
+            {% for product in products %}
+                <a href="{% url 'product_detail' bags.id %}" class="product-card-link">
+                    <div class="product-card">
+                        {% if bags.image %}
+                            <img src="{{ bags.image.url }}" alt="{{ bags.name }}">
+                        {% else %}
+                            <img src="{% static 'img/logoproduct.png' %}" alt="Default Image">
+                        {% endif %}
+                        <div class="caption">
+                            <h6>{{ bags.name }}</h6>
+                            <p><strong>${{ bags.price }}</strong></p>
+                        </div>
+                    </div>
+                </a>
+            {% empty %}
+                <p>No products available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+<script>
+    // JavaScript to handle slide-up animation when scrolling
+    document.addEventListener("DOMContentLoaded", function() {
+        const productCards = document.querySelectorAll('.product-card');
+
+        // Function to show cards with sliding effect
+        function showCardsOnScroll() {
+            productCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight;
+
+                if (cardPosition < screenPosition) {
+                    setTimeout(() => {
+                        card.style.opacity = 1;
+                        card.style.transform = 'translateY(0)';
+                    }, index * 150);  // Delay between cards for staggered effect
+                }
+            });
+        }
+
+        // Trigger animation on scroll
+        window.addEventListener('scroll', showCardsOnScroll);
+
+        // Also trigger animation on page load
+        showCardsOnScroll();
+    });
+</script>
+
+{% endblock content %}
