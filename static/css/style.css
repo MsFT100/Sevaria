@@ -17,7 +17,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
-    background-color: #35722f;
+    background-color: #35722f00;
     color: white;
 }
 
@@ -61,7 +61,7 @@ nav {
     bottom: 0;
     width: 100%; /* Full width */
     height: 2px; /* Match border thickness */
-    background-color: #007BFF; /* Color of the filling animation */
+    background-color: rgba(255, 37, 37, 0.97); /* Color of the filling animation */
     transform: translateX(-100%); /* Start off-screen to the left */
     transition: transform 0.3s ease; /* Animate the transformation */
 }
@@ -85,7 +85,7 @@ nav {
 
 .hover-effect:hover {
     color: white; /* Text color on hover */
-    border-bottom: 2px solid #007BFF; /* Blue underline on hover */
+    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Blue underline on hover */
 }
 
 .brand {
