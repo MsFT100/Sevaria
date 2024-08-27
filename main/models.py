@@ -37,6 +37,9 @@ class ProductVariant(models.Model):
         ('GREEN', 'Green'),
         ('BLACK', 'Black'),
         ('WHITE', 'White'),
+        ('LIGHT BLUE', 'Light blue'),
+        ('DARK BLUE', 'Dark blue'),
+        ('BROWN', 'Brown'),
     ]
 
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)

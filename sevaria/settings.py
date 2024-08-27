@@ -134,12 +134,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Assuming your static files are in a "static" directory in your project root
+    BASE_DIR / "static",  # Directory for your static files
 ]
-#iLqTaSb4TijW4Jg
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory where static files will be collected
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'  # URL endpoint for media files
 MEDIA_ROOT = BASE_DIR / 'media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
