@@ -29,8 +29,8 @@ class Shop(View):
 
 class Bags(View):
     def get(self, request):
-        products = Product.objects.filter(category='bags')
-        return render(request, 'pages/bags.html', {'bags': products})
+        products = Product.objects.filter(category='Bags')
+        return render(request, 'pages/bags.html', {'products': products})
     
 class ProductDetail(DetailView):
     model = Product

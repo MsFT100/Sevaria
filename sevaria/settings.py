@@ -85,8 +85,14 @@ WSGI_APPLICATION = 'sevaria.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sevariac_sevariaDB',
+        'USER': 'sevariac',
+        'PASSWORD': '22aUEYUY8c92:N1S',
+        'HOST':'sevaria.co.ke',
+        'PORT':'3306',
     }
 }
 

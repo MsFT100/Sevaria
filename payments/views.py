@@ -54,7 +54,11 @@ class CheckoutView(View):
         if form.is_valid():
             # Create the order instance
             order = form.save(commit=False)
-            order.user = request.user
+            # Check if the user is authenticated, otherwise allow guest checkout
+            if request.user.is_authenticated:
+                order.user = request.user
+            else:
+                order.user = None  # Guest checkout
             
             # Retrieve cart from session
             cart = request.session.get('cart', {})
@@ -110,7 +114,7 @@ class CheckoutView(View):
                 "amount": float(order.total_price),
                 "description": f"Payment for order {order.id}",
                 "callback_url": settings.PESAPAL_CALLBACK_URL,
-                "notification_id": "cc29facc-5f41-4de5-bb6b-dcdf686b0ae9",
+                "notification_id": "16eef5c4-dc67-423c-8b44-dcd9cd412a17",
                 "billing_address": {
                     "email_address": email,
                     "phone_number": phone_number,

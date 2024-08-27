@@ -51,7 +51,7 @@ class Order(models.Model):
         ('CANCELLED', 'Cancelled'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     shipping_address = models.TextField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     tracking_id = models.CharField(max_length=255, null=True, blank=True)
