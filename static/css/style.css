@@ -9,7 +9,7 @@
 body {
     font-family: 'Rosario', sans-serif;
     border: 1rem solid rgba(242, 235, 20, 0.97);
-    background-color: #35722f;
+    background-color: #35722f !important;
 }
 
 nav {
@@ -17,7 +17,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
-    background-color: #35722f00;
+    background-color: #be333300;
     color: white;
 }
 
