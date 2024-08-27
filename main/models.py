@@ -9,6 +9,9 @@ class Product(models.Model):
     CATEGORY = [
         ('DRESS', 'Dress'),
         ('BAGS', 'Bags'),
+        ('T-Shirts', 'T-Shirts'),
+        ('SHIRTS', 'Shirts'),
+        ('SKIRTS', 'Skirts'),
     ]
     name = models.CharField(max_length=255)
     description = models.TextField(default='null')
@@ -33,6 +36,7 @@ class ProductVariant(models.Model):
         ('BLUE', 'Blue'),
         ('GREEN', 'Green'),
         ('BLACK', 'Black'),
+        ('WHITE', 'White'),
     ]
 
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
