@@ -21,6 +21,7 @@
     cursor: pointer;
     overflow: hidden;
     padding: 0;
+    height: 100%;
     text-align: center;
     color: white;
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
