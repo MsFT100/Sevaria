@@ -241,8 +241,6 @@ class PaymentStatus(APIView):
         except Payment.DoesNotExist:
             return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-
 class IPNCallback(APIView):
     def post(self, request):
         tracking_id = request.data.get('OrderTrackingId')
@@ -259,9 +257,6 @@ class IPNCallback(APIView):
         
         except Payment.DoesNotExist:
             return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
-
-
-
 
 # Helper function to refresh OAuth token
 def getOath():

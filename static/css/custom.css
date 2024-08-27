@@ -377,6 +377,12 @@
     .column-unit {
         flex: 1 1 100%;
     }
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 3 columns */
+        
+        
+    }
 }
 
 .zoomable { 

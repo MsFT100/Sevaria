@@ -145,6 +145,7 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SHIPSHAP_API_KEY = '6e6ca877a3bcbc345cf904095d9a98fa3f444a734f195d02bafb6739d129822e'
 PESAPAL_SANDBOX_URL = 'https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken'
 PESAPAL_LIVE_URL = 'https://pay.pesapal.com/v3/api/Auth/RequestToken'
 PESAPAL_CONSUMER_KEY = 'BnuTtCuLgwmXkkoF+XCyiTtuwq6KCMiE'
