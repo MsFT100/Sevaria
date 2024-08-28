@@ -141,6 +141,7 @@
         cart.classList.remove("closing");
         setTimeout(() => {
             cart.style.transform = "translate(-50%, -50%) scale(1)";
+            closeIndexContent();
         }, 10); // Trigger reflow to ensure animation
     }
 
@@ -150,9 +151,23 @@
         cart.style.transform = "scale(0.1) translate(1100%, -1150%)";
         setTimeout(() => {
             cart.style.display = "none";
+            openIndexContent();
         }, 600); // Match with animation duration
     }
-
+    function closeIndexContent() {
+      const cart = document.getElementById("content-index");
+      
+      setTimeout(() => {
+          cart.style.display = "none";
+      }, 300); // Match with animation duration
+    }
+    function openIndexContent() {
+      const cart = document.getElementById("content-index");
+      
+      setTimeout(() => {
+          cart.style.display = "block";
+      }, 600); // Match with animation duration
+    }
     //populate the cart
     function populateCart() {
       const cartItemsContainer = document.getElementById('cartItems');

@@ -210,8 +210,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Optional: Add a dark overlay to improve text readability */
+    height: 100%;/* Optional: Add a dark overlay to improve text readability */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -357,6 +356,21 @@
     box-sizing: border-box;
     padding: 1rem;
 }
+.column-unit h3{
+    color: black;
+}
+.column-unit p{
+    color: black
+}
+.column-unit-contact-info p{
+    color: black;
+}
+.column-unit-contact-info a{
+  color: rgb(255, 170, 1);
+}
+.column-unit-contact-info a:hover{
+    color: rgba(255, 37, 37, 0.97);
+  }
 .column-unit span {
     display: block;
 }
@@ -368,7 +382,7 @@
     color: rgb(255, 170, 1);
 }
 .contact-info a {
-    background-color: rgb(255, 197, 8);
+    color: rgb(255, 197,8);
 }
 .contact-info a:hover {
     color: #ff3b3b !important;
