@@ -3,28 +3,96 @@
 {% block content %}
 
 <style>
-    label{
+    body {
+        background-color: #35722f; /* Dark background */
+        color: #ffffff; /* White text for better readability */
+    }
+
+    label {
         color: white;
+    }
+
+    .custom-container {
+        background-color: #35722f; /* Slightly lighter background for form container */
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 600px; /* Constrain the container width for better readability */
+        margin: auto; /* Center the container */
+    }
+
+    .form-label {
+        font-size: 1.1rem; /* Slightly larger font for labels */
+    }
+
+    .form-control {
+        padding: 12px; /* Increase padding for input fields */
+        font-size: 1.1rem; /* Larger font size for inputs */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    .form-group {
+        margin-bottom: 25px; /* Increase space between form groups */
+    }
+
+    .cart-item img {
+        max-width: 100%; /* Ensure images are responsive */
+        border-radius: 5px; /* Add some rounding to match the container */
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .cart-item-details {
+        margin-left: 15px;
+    }
+
+    #error-message {
+        display: none; /* Hidden by default */
+    }
+
+    /* Button Styling */
+    .btn-primary {
+    background-color: #ff3b3b !important; /* Override with !important */
+    border: none !important;
+    padding: 15px 20px !important;
+    font-size: 1.1rem !important;
+    border-radius: 5px !important;
+    color: white;
+    cursor: pointer !important;
+}
+
+    .btn-primary:hover {
+        background-color: white !important; /* Darker green on hover */
+        color: black !important;
+    }
+
+    .btn-primary:active {
+        background-color: #3e8e41; /* Even darker green on active */
+        box-shadow: 0 5px #666; /* Add a shadow to the button on click */
+        transform: translateY(4px); /* Push button down slightly on click */
     }
 </style>
 
 <div class="container-md">
     <div class="custom-container">
         <h2 class="text-center">Checkout</h2>
-    
+   
         <form id="payment-form" method="POST">
             {% csrf_token %}
-            
+           
             <div class="form-group">
-                <label for="shipping_address" >Shipping Address:</label>
+                <label for="shipping_address" class="form-label">Shipping Address:</label>
                 <textarea id="shipping_address" name="shipping_address" class="form-control" required>{{ form.shipping_address.value }}</textarea>
             </div>
 
-            <!-- Display cart items 
-            <div class="cart-items">
+            <!-- Display cart items -->
+            <div class="cart-items mb-3">
                 {% for item in cart_items %}
-                <div class="cart-item">
-                    <img src="{{ item.image_url }}" alt="{{ item.name }}">
+                <div class="cart-item p-2 border rounded">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}" class="img-fluid">
                     <div class="cart-item-details">
                         <p>Name: {{ item.name }}</p>
                         <p>Price: {{ item.price }}</p>
@@ -34,45 +102,45 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>-->
+            </div>
 
             <div class="form-group">
-                <label for="total_price" style="color: white; font-size: 20px;">Total Price:</label>
+                <label for="total_price" class="form-label">Total Price:</label>
                 <input type="text" id="total_price" name="total_price" class="form-control" value="{{ total_price }}" readonly>
             </div>
-            
-            <!-- Other form fields -->
+           
             <div class="form-group">
-                <label for="first_name">First Name:</label>
+                <label for="first_name" class="form-label">First Name:</label>
                 <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
             </div>
 
             <div class="form-group">
-                <label for="last_name">Last Name:</label>
+                <label for="last_name" class="form-label">Last Name:</label>
                 <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
             </div>
 
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email" class="form-label">Email:</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
             </div>
 
             <div class="form-group">
-                <label for="phone_number">Phone:</label>
+
+
+                <label for="phone_number" class="form-label">Phone:</label>
                 <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.profile.phone_number }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="country">Country Code:</label>
+            <div class="form-group mb-4">
+                <label for="country" class="form-label">Country Code:</label>
                 <input type="text" id="country" name="country" class="form-control" value="KE" required>
             </div>
 
-            <input type="submit" value="Pay Now" class="btn btn-primary">
+            <input type="submit" value="Pay Now" class="btn btn-primary w-100">
         </form>
 
         <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
     </div>
-    
 </div>
 
 <script>
@@ -81,12 +149,12 @@
 
         const formData = new FormData(this);
         const errorMessage = document.getElementById('error-message');
-        
+       
         // Log form data for debugging
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-        
+       
         fetch("{% url 'checkout-api' %}", {
             method: 'POST',
             body: formData,
@@ -101,7 +169,6 @@
             return response.json();
         })
         .then(data => {
-            console.log('Error', data)
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;  // Redirect to PesaPal payment page
             } else {
