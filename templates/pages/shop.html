@@ -11,9 +11,9 @@
                 <a href="{% url 'product_detail' product.id %}" class="product-card-link">
                     <div class="product-card">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <img data-src=""src="{{ product.image.url }}" alt="{{ product.name }}" class="lazyload">
                         {% else %}
-                            <img src="{% static 'img/logoproduct.png' %}" alt="Default Image">
+                            <img data-src="{% static 'img/logoproduct.png' %}" alt="Default Image" class="lazyload">
                         {% endif %}
                         <div class="caption">
                             <h6>{{ product.name }}</h6>

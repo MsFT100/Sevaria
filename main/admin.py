@@ -41,11 +41,12 @@ class OrderDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Pass the order items to the context
-        context['order'] = Order.objects.filter(order=self.object)
+        # Use the 'items' related name to access OrderItems
+        context['order_items'] = self.object.items.all()  # Use the related name 'items' directly
         # Add shipping info if available
         context['shipping_info'] = ShippingInfo.objects.filter(order=self.object).first()
         return context
+
 
 
 # Register Order with custom detail view and inlines

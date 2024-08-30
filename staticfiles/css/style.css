@@ -1,15 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Rosario:ital,wght@0,300..700;1,300..700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Rosario', sans-serif;
-    border: 1rem solid rgba(242, 235, 20, 0.97);
-    background-color: #35722f;
+    border: 1rem solid rgb(242 235 20);
+    background-color: #35722f !important;
 }
 
 nav {
@@ -17,7 +10,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
-    background-color: #35722f;
+    background-color: #be333300;
     color: white;
 }
 
@@ -26,13 +19,11 @@ nav {
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
+    display: none;
     background-color: transparent;
     color: white;
     min-width: max-content;
-    
-    z-index: 1;
     transition: .7s;
 }
 
@@ -61,7 +52,7 @@ nav {
     bottom: 0;
     width: 100%; /* Full width */
     height: 2px; /* Match border thickness */
-    background-color: #007BFF; /* Color of the filling animation */
+    background-color: rgba(255, 37, 37, 0.97); /* Color of the filling animation */
     transform: translateX(-100%); /* Start off-screen to the left */
     transition: transform 0.3s ease; /* Animate the transformation */
 }
@@ -82,10 +73,21 @@ nav {
     transition: color 0.3s ease, background-color 0.3s ease;
     border-bottom: 2px solid transparent; /* Default border for the effect */
 }
+.hover-effect-title{
+    color: rgb(236 232 20);
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-bottom: 2px solid transparent;
+    font-size: x-large;
+}
+.hover-effect-title:hover{
+    color: white; /* Text color on hover */
+    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Blue underline on hover */
 
+}
 .hover-effect:hover {
     color: white; /* Text color on hover */
-    border-bottom: 2px solid #007BFF; /* Blue underline on hover */
+    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Blue underline on hover */
 }
 
 .brand {

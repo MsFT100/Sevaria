@@ -48,8 +48,9 @@
 <body>
     
     
-    <main class="container-full">
+    
       {% include "navigation/navigation.html" %}
+    <main class="container-full">
       {% block content %} {% endblock content %}
       {% include 'navigation/footer.html' %}
       <!-- Floating Cart Container -->
@@ -57,7 +58,7 @@
         <span class="close-btn" onclick="closeCart()">×</span>
         
 
-        <h3>Cart</h3>
+        <h3>My Cart</h3>
         <div class="cart-a-content">
             
             <!-- List Cart Items -->         
@@ -72,10 +73,12 @@
           
             
             <a href="{% url "checkout-api" %}" class="checkout-btn">Proceed to Payment</a>
-            <button type="button" id="clear-cart-btn" class="btn btn-danger">Clear Cart</button>
+            <button type="button" id="clear-cart-btn" class="checkout-btn">Clear Cart</button>
         </div> 
       </div>
     </main>
+      
+    
   
     <!--   Core JS Files   -->
     <script src="{% static 'js/core/jquery-3.7.1.min.js '%} "></script>
@@ -85,18 +88,7 @@
     <!-- jQuery Scrollbar -->
     <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js '%} "></script>
 
-    <!-- Chart JS -->
-    <script src="{% static 'js/plugin/chart.js/chart.min.js '%} "></script>
-
-    <!-- jQuery Sparkline -->
-    <script src="{% static 'js/plugin/jquery.sparkline/jquery.sparkline.min.js '%} "></script>
-
-    <!-- Chart Circle -->
-    <script src="{% static 'js/plugin/chart-circle/circles.min.js '%} "></script>
-
-    <!-- Datatables -->
-    <script src="{% static 'js/plugin/datatables/datatables.min.js '%} "></script>
-
+   
     <!-- Bootstrap Notify -->
     <script src="{% static 'js/plugin/bootstrap-notify/bootstrap-notify.min.js '%} "></script>
 
@@ -109,7 +101,8 @@
 
     <!-- Kaiadmin JS -->
     <script src="{% static 'js/kaiadmin.min.js'%} "></script>
-
+    <!--Cloud Flare-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
 
     <script>
       function changeImage(element) {
