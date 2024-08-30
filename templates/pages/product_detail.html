@@ -219,14 +219,14 @@
         <h3>Select Color</h3>
         <select id="colorSelect">
             {% for color in colors %}
-                <option value="{{ color.0 }}">{{ color.1 }}</option>
+                <option value="{{ color }}">{{ color }}</option>
             {% endfor %}
         </select>
 
         <h3>Select Size</h3>
         <select id="sizeSelect">
             {% for size in sizes %}
-                <option value="{{ size.0 }}">{{ size.1 }}</option>
+                <option value="{{ size }}">{{ size }}</option>
             {% endfor %}
         </select>
 
@@ -342,13 +342,31 @@
     }
 </script>
 <script>
-    document.getElementById('sizeSelect').addEventListener('change', function() {
-        var selectedSize = this.value;
-        var stock = {{ stock_info|safe }};
-        var maxQuantity = stock[selectedSize] || 1;
-        document.getElementById('quantityInput').setAttribute('max', maxQuantity);
+    document.getElementById('colorSelect').addEventListener('change', function() {
+        var selectedColor = this.value;
+        var sizes = {{ sizes|safe }};  // Assumes sizes are passed in JSON format
+        var stockInfo = {{ stock_info|safe }};  // Assumes stock info is passed in JSON format
+    
+        // Filter sizes based on the selected color
+        var availableSizes = new Set();
+        for (var key in stockInfo) {
+            if (key.endsWith('-' + selectedColor)) {
+                availableSizes.add(key.split('-')[0]);
+            }
+        }
+    
+        // Update size dropdown
+        var sizeSelect = document.getElementById('sizeSelect');
+        sizeSelect.innerHTML = '';  // Clear current options
+        availableSizes.forEach(function(size) {
+            var option = document.createElement('option');
+            option.value = size;
+            option.text = size;
+            sizeSelect.add(option);
+        });
     });
 </script>
+    
 
 
 

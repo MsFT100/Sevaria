@@ -3,6 +3,8 @@ from django.http import HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import DetailView
+from django.db.models import Q
+
 
 from main.models import Product, ProductVariant
 
@@ -24,7 +26,7 @@ class CheckOutPage(View):
 
 class Shop(View):
     def get(self, request):
-        products = Product.objects.all()
+        products = Product.objects.filter(Q(category='Dress') | Q(category='Shirt') | Q(category='Skirt') | Q(category='T-Shirts'))
         return render(request, 'pages/shop.html', {'products': products})
 
 class Bags(View):
@@ -50,12 +52,17 @@ class ProductDetail(DetailView):
 
          # Create a dictionary for stock information based on size and color
         stock_info = {}
+        colors = set()
+        sizes = set()
+
         for variant in variants:
             key = f"{variant.size}-{variant.color}"
             stock_info[key] = variant.stock
+            colors.add(variant.color)
+            sizes.add(variant.size)
 
-        context['colors'] = ProductVariant.COLORS
-        context['sizes'] = ProductVariant.SIZES
+        context['colors'] = sorted(colors)
+        context['sizes'] = sorted(sizes)
         context['stock_info'] = stock_info  # Pass stock info to the template
         context['variants'] = variants  # Pass the variants to the template # Pass the variants to the template
         

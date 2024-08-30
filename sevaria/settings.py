@@ -1,6 +1,14 @@
 
 import os
 from pathlib import Path
+import environ
+
+
+env = environ.Env(
+    DEBUG=(bool, False)  # Set default values and casting
+)
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,14 +85,14 @@ DATABASES = {
     'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sevariac_sevariaDB',
-        'USER': 'sevariac',
-        'PASSWORD': '22aUEYUY8c92:N1S',
-        'HOST':'sevaria.co.ke',
-        'PORT':'3306',
+        'ENGINE': env('DB_ENGINE', default='django.db.backends.mysql'),
+        'NAME': env('DB_NAME', default='sDB'),
+        'USER': env('DB_USER', default='sevariac'),
+        'PASSWORD': env('DB_PASSWORD', default='S'),
+        'HOST': env('DB_HOST', default='sevaria.co.ke'),
+        'PORT': env('DB_PORT', default='3306'),
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'",
+            'init_command': env('DB_OPTIONS', default="SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'")
         },
     }
 }
@@ -138,16 +146,16 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SHIPSHAP_API_KEY = '6e6ca877a3bcbc345cf904095d9a98fa3f444a734f195d02bafb6739d129822e'
-PESAPAL_SANDBOX_URL = 'https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken'
-PESAPAL_LIVE_URL = 'https://pay.pesapal.com/v3/api/Auth/RequestToken'
-PESAPAL_CONSUMER_KEY = 'BnuTtCuLgwmXkkoF+XCyiTtuwq6KCMiE'
-PESAPAL_CONSUMER_SECRET = 'fwfTZT+Hp+51FqKVJlEmoaSOg+s='
-PESAPAL_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/RegisterIPN'
-PESAPAL_LIST_IPN_URL = 'https://pay.pesapal.com/v3/api/URLSetup/GetIpnList'
-PESAPAL_CALLBACK_URL = 'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net/paymentresult'
-PESAPAL_CHECKOUT_URL = "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest"
-IPN_ID = '16eef5c4-dc67-423c-8b44-dcd9cd412a17'
+SHIPSHAP_API_KEY = env('SHIPSHAP_API_KEY')
+PESAPAL_SANDBOX_URL = env('PESAPAL_SANDBOX_URL')
+PESAPAL_LIVE_URL = env('PESAPAL_LIVE_URL')
+PESAPAL_CONSUMER_KEY = env('PESAPAL_CONSUMER_KEY')
+PESAPAL_CONSUMER_SECRET = env('PESAPAL_CONSUMER_SECRET')
+PESAPAL_IPN_URL = env('PESAPAL_IPN_URL')
+PESAPAL_LIST_IPN_URL = env('PESAPAL_LIST_IPN_URL')
+PESAPAL_CALLBACK_URL = env('PESAPAL_CALLBACK_URL')
+PESAPAL_CHECKOUT_URL = env("PESAPAL_CHECKOUT_URL")
+IPN_ID = env('IPN_ID')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',
