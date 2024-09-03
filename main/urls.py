@@ -13,7 +13,7 @@ urlpatterns = [
     path('clear-cart/', views.clear_cart, name='clear_cart'),
     path('checkout/', views.CheckOut.as_view(), name='checkout'),
     
-    path('paymentresult/', views.CheckOutPage.as_view(), name='pay_status'),
+    path('paymentresult/', views.SuccessPage.as_view(), name='pay_status'),
 
     path('adminlogin/', views.AdminLogin.as_view(), name='admin_login'),
     path('admin/dashboard/', views.AdminDashboard.as_view(), name='admin_dashboard'),

@@ -151,6 +151,11 @@
                     <label for="total_price" class="form-label">Total Price + Shipping Fees:</label>
                     <input type="text" id="total_price" name="total_price" class="form-control" value="{{ total_price }}" readonly>
                 </div>
+
+                <!-- Hidden inputs for shipping details -->
+            
+
+
             </form>
         </div>
 
@@ -163,6 +168,15 @@
                 </select>
             </div>
             
+            <input type="hidden" id="shipping_service_name" name="shipping_service_name">
+            <input type="hidden" id="shipping_provider" name="shipping_provider">
+            <input type="hidden" id="shipping_token" name="shipping_token">
+            <input type="hidden" id="shipping_terms" name="shipping_terms">
+            <input type="hidden" id="shipping_provider_image" name="shipping_provider_image">
+            <input type="hidden" id="shipping_currency" name="shipping_currency">
+            <input type="hidden" id="shipping_amount" name="shipping_amount">
+            <input type="hidden" id="shipping_amount_local" name="shipping_amount_local">
+            <input type="hidden" id="shipping_estimated_days" name="shipping_estimated_days">
 
             <input type="submit" value="Pay Now" class="btn btn-primary w-100">
         </form>
@@ -333,9 +347,17 @@
                 option.value = rate.id;
                 option.text = `${rate.service.name} - ${rate.currency} ${rate.amount} (${rate.service.terms})`;
                 option.setAttribute('data-price', rate.amount);
-                option.setAttribute('data-currency', rate.currency) // Store the price in a data attribute
+                option.setAttribute('data-currency', rate.currency);
+                option.setAttribute('data-amount-local', rate.amount_local);
+                option.setAttribute('data-estimated-days', rate.estimated_days);
+                console.log(rate.estimated_days)
+                option.setAttribute('data-service-name', rate.service.name);
+                option.setAttribute('data-provider', rate.service.provider);
+                option.setAttribute('data-token', rate.service.token);
+                option.setAttribute('data-terms', rate.service.terms);
+                option.setAttribute('data-provider-image', rate.service.provider_image);
                 ratesContainer.appendChild(option);
-            });
+                });
 
             // Check if no rates were added
             if (ratesContainer.options.length === 0) {
@@ -352,62 +374,97 @@
         });
     });
 
-    // Update the total price when a shipping rate is selected
-    document.getElementById('shipping-rates').addEventListener('change', function() {
-        const selectedRate = this.options[this.selectedIndex];
-        const shippingCost = parseFloat(selectedRate.getAttribute('data-price')) || 0;
-        const basePrice = parseFloat(document.getElementById('total_shipping_price').value) || 0;
-        
-        console.log(shippingCost);
-        
-            
-         // Ensure shippingCurrency is defined and valid
-        const shippingCurrency = selectedRate.getAttribute('data-currency') || 'USD';
-
-        // Convert the shipping cost to USD if it's not already in USD
-        // If currency is not USD, request backend to convert
-        if (shippingCurrency !== 'USD') {
-
-            console.log(shippingCost);
-            fetch("{% url 'convertcurrency' %}", {  // Adjust to your backend endpoint
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                },
-                body: JSON.stringify({
-                    amount: shippingCost,
-                    fromCurrency: shippingCurrency,
-                    toCurrency: 'USD'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const convertedAmount = data.convertedAmount;
-                const newTotal = basePrice + convertedAmount;
-
-                console.log(convertedAmount);
-                // Update the total price on the form
-                document.getElementById('total_price').value = newTotal.toFixed(2);
-
-                previousShippingCost = shippingCost;
-            })
-            .catch(error => {
-                console.error('Currency conversion error:', error);
-                const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = 'Failed to convert currency. Please try again.';
-                errorMessage.style.display = 'block';
+    document.addEventListener('DOMContentLoaded', function() {
+        const shippingRatesSelect = document.getElementById('shipping-rates');
+        const totalShippingPriceField = document.getElementById('total_shipping_price');
+        const totalPriceField = document.getElementById('total_price');
+        const errorMessage = document.getElementById('error-message');
+    
+        if (shippingRatesSelect) {
+            shippingRatesSelect.addEventListener('change', function() {
+                const selectedRate = this.options[this.selectedIndex];
+                if (!selectedRate) return;
+    
+                const shippingCost = parseFloat(selectedRate.getAttribute('data-price')) || 0;
+                const basePrice = parseFloat(totalShippingPriceField ? totalShippingPriceField.value : '0') || 0;
+    
+                // Extract all necessary shipping details
+                const shippingDetails = {
+                    id: selectedRate.value,
+                    name: selectedRate.getAttribute('data-service-name'),
+                    provider: selectedRate.getAttribute('data-provider'),
+                    token: selectedRate.getAttribute('data-token'),
+                    terms: selectedRate.getAttribute('data-terms'),
+                    providerImage: selectedRate.getAttribute('data-provider-image'),
+                    currency: selectedRate.getAttribute('data-currency'),
+                    amount: selectedRate.getAttribute('data-price'),
+                    amountLocal: selectedRate.getAttribute('data-amount-local'),
+                    estimatedDays: selectedRate.getAttribute('data-estimated-days')
+                };
+    
+                // Populate hidden fields if they exist
+                ['shipping_service_name', 'shipping_provider', 'shipping_token', 'shipping_terms', 
+                 'shipping_provider_image', 'shipping_currency', 'shipping_amount', 
+                 'shipping_amount_local', 'shipping_estimated_days'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.value = shippingDetails[id.replace('shipping_', '')] || '';
+                    }
+                });
+    
+                console.log(shippingCost);
+    
+                // Ensure shippingCurrency is defined and valid
+                const shippingCurrency = shippingDetails.currency || 'USD';
+    
+                // Convert the shipping cost to USD if it's not already in USD
+                if (shippingCurrency !== 'USD') {
+                    fetch("{% url 'convertcurrency' %}", {  // Adjust to your backend endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        },
+                        body: JSON.stringify({
+                            amount: shippingCost,
+                            fromCurrency: shippingCurrency,
+                            toCurrency: 'USD'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const convertedAmount = data.convertedAmount;
+                        const newTotal = basePrice + convertedAmount;
+    
+                        console.log(convertedAmount);
+                        // Update the total price on the form
+                        if (totalPriceField) {
+                            totalPriceField.value = newTotal.toFixed(2);
+                        }
+    
+                        previousShippingCost = shippingCost;
+                    })
+                    .catch(error => {
+                        console.error('Currency conversion error:', error);
+                        if (errorMessage) {
+                            errorMessage.textContent = 'Failed to convert currency. Please try again.';
+                            errorMessage.style.display = 'block';
+                        }
+                    });
+                } else {
+                    const newTotal = basePrice + shippingCost;
+    
+                    // Update the total price on the form
+                    if (totalPriceField) {
+                        totalPriceField.value = newTotal.toFixed(2);
+                    }
+    
+                    previousShippingCost = shippingCost;
+                }
             });
-        } else {
-            const newTotal = basePrice + shippingCost;
-
-            // Update the total price on the form
-            document.getElementById('total_price').value = newTotal.toFixed(2);
-
-            previousShippingCost = shippingCost;
         }
     });
-
+    
 //order order-summary-form
 
     

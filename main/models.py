@@ -85,6 +85,17 @@ class Order(models.Model):
     tracking_id = models.CharField(max_length=255, null=True, blank=True)  # From Payment model
     phone_number = models.CharField(max_length=15, blank=True, null=True)  # Optional for payments
 
+    # Shipping Details
+    shipping_provider = models.CharField(max_length=255, blank=True, null=True)
+    shipping_token = models.CharField(max_length=255, blank=True, null=True)
+    shipping_terms = models.TextField(blank=True, null=True)
+    shipping_provider_image = models.URLField(blank=True, null=True)
+    shipping_currency = models.CharField(max_length=10, blank=True, null=True)
+    shipping_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    
+
+
+    
     def __str__(self):
         return f'Order {self.id} by {self.user.username if self.user else "Guest"}'
 
@@ -96,14 +107,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return f'{self.quantity} of {self.product.name}'
 
-class ShippingInfo(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    tracking_number = models.CharField(max_length=50, blank=True, null=True)
-    carrier = models.CharField(max_length=100, blank=True, null=True)
-    estimated_delivery_date = models.DateField(blank=True, null=True)
 
-    def __str__(self):
-        return f'Shipping info for Order {self.order.id}'
     
 
 

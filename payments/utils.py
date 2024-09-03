@@ -1,10 +1,17 @@
 # utils.py
-def send_order_confirmation_email(order):
-    subject = f"Order Confirmation - {order.order_number}"
-    message = f"""
-    Dear {order.user.username},
 
-    Thank you for your order! Your order number is {order.order_number}.
+
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+
+def send_order_confirmation_email(order):
+    subject = f"Order Confirmation - {order.transaction_reference}"
+    message = f"""
+    Dear {order.first_name},
+
+    Thank you for your order! Your order number is {order.id}.
     Shipping to: {order.shipping_address}
     Tracking number: {order.tracking_number}
 

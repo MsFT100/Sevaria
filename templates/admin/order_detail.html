@@ -77,13 +77,15 @@
 </head>
 <body>
     <div class="container">
-        <h2>Order Details for {{ order }}</h2>
+        <h2>Order Details for Order {{ order.id }}</h2>
 
         <div class="shipping-info">
             <h3>Shipping Info</h3>
-            <p><strong>Tracking Number:</strong> {{ shipping_info.tracking_number }}</p>
-            <p><strong>Carrier:</strong> {{ shipping_info.carrier }}</p>
-            <p><strong>Estimated Delivery Date:</strong> {{ shipping_info.estimated_delivery_date }}</p>
+            <p><strong>Tracking ID:</strong> {{ order.tracking_id }}</p>
+            <p><strong>Shipping Provider:</strong> {{ order.shipping_provider }}</p>
+            <p><strong>Estimated Days:</strong> {{ order.shipping_terms }}</p>
+            <p><strong>Shipping Amount (USD):</strong> {{ order.shipping_amount }}</p>
+            <p><strong>Shipping Currency:</strong> {{ order.shipping_currency }}</p>
         </div>
 
         <h3>Items</h3>

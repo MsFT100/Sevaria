@@ -1,12 +1,15 @@
 import json
+from django.conf import settings
 from django.http import HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import DetailView
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
-
-from main.models import Product, ProductVariant
+from main.models import Order, Product, ProductVariant
 
 # Create your views here.
 class Index( View):
@@ -19,9 +22,33 @@ class CheckOut(View):
     def get(self, request):
         return render(request, 'pages/checkout.html')
 
-class CheckOutPage(View):
+class SuccessPage(View):
     def get(self, request):
-        return render(request, 'pages/successfulpay.html')
+        # Extract parameters from URL
+        tracking_id = request.GET.get('OrderTrackingId')
+        merchant_reference = request.GET.get('OrderMerchantReference')
+
+        print(tracking_id)
+        # Validate the parameters
+        if not tracking_id or not merchant_reference:
+            return render(request, 'error.html', {'message': 'Missing parameters'})
+
+        # Query the database for the order
+        order = get_object_or_404(Order, transaction_reference=tracking_id)
+        #clear the cart
+        #clear_cart()
+
+        #send the email
+        order.payment_status = 'Completed'
+        order.save()
+        
+        send_order_confirmation_email(self,order)
+        # Pass order details to the template
+        context = {
+            'order': order,
+        }
+        
+        return render(request, 'pages/successfulpay.html', context)
     
 
 class Shop(View):
@@ -151,3 +178,19 @@ def clear_cart(request):
         request.session['cart'] = {}
         return JsonResponse({'success': True, 'message': 'Cart has been cleared.'})
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+
+def send_order_confirmation_email(self, order):
+        subject = 'Order Confirmation - Your Order with Sevaria'
+        recipient = order.email  # Use the email associated with the order
+        context = {
+            'order': order,
+            'order_items': order.items.all(),  # Assuming Order model has related items
+        }
+        # Render email content from a template
+        html_message = render_to_string('emails/order_confirmation.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to = recipient
+
+        send_mail(subject, plain_message, from_email, [to], html_message=html_message)

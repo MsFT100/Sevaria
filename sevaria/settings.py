@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 import environ
-
+from zoneinfo import ZoneInfo
 
 env = environ.Env(
     DEBUG=(bool, False)  # Set default values and casting
@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -160,16 +160,18 @@ PESAPAL_CHECKOUT_URL = env("PESAPAL_CHECKOUT_URL")
 IPN_ID = env('IPN_ID')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',
+    'https://f150-41-212-45-223.ngrok-free.app',
     'https://sevaria.co.ke',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.sevaria.co,ke'
-EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.sevaria.co.ke'  # Remove the comma
 EMAIL_PORT = 465
+EMAIL_USE_SSL = True  # Use SSL for port 465
+EMAIL_USE_TLS = False  # Disable TLS
 EMAIL_HOST_USER = 'hello@sevaria.co.ke'
 EMAIL_HOST_PASSWORD = 'Jl959js$6'
+DEFAULT_FROM_EMAIL = 'hello@sevaria.co.ke'
 
 
 
