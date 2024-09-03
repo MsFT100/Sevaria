@@ -55,7 +55,12 @@
       {% include 'navigation/footer.html' %}
       <!-- Floating Cart Container -->
       <div class="cart-a-container" id="cart-a">
-        <span class="close-btn" onclick="closeCart()">×</span>
+        <form id="payment-form" method="POST">
+          {% csrf_token %}
+          <span class="close-btn" onclick="closeCart()">×</span>
+        </form>
+        
+        
         
 
         <h3>My Cart</h3>
@@ -210,6 +215,7 @@
             if (response.ok) {
                 // Optionally update the cart UI to show that it is empty
                 document.getElementById('cartItems').innerHTML = ''; // Clear cart items
+                document.getElementById('cartTotal').textContent = '0.00';
             } else {
                 console.error('Failed to clear the cart.');
             }

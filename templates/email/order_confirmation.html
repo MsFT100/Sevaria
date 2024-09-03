@@ -1,0 +1,28 @@
+<!-- templates/emails/order_confirmation.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h2>Thank you for your order, {{ order.first_name }} {{ order.last_name }}!</h2>
+    <p>Your order ID is <strong>#{{ order.id }}</strong> and the total amount is <strong>${{ order.total_price }}</strong>.</p>
+
+    <h3>Order Details:</h3>
+    <ul>
+        {% for item in order_items %}
+        <li>
+            {{ item.quantity }} x {{ item.product.name }} ({{ item.product_variant.size }} - {{ item.product_variant.color }})
+        </li>
+        {% endfor %}
+    </ul>
+
+    <p>We are preparing your order for shipping and will notify you once it's on the way!</p>
+
+    <p>If you have any questions, feel free to contact us at support@example.com.</p>
+
+    <p>Best regards,<br>Sevaria Team</p>
+</body>
+</html>

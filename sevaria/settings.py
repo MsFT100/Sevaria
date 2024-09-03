@@ -26,7 +26,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net', 
                  'sevaria.co.ke',
                  'localhost',
-                 '127.0.0.1',]
+                 '127.0.0.1',
+                 'f150-41-212-45-223.ngrok-free.app',]
 
 
 # Application definition
@@ -146,7 +147,8 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SHIPSHAP_API_KEY = env('SHIPSHAP_API_KEY')
+EXCHANGERATE_API = env('EXCHANGERATE_API')
+SHIPSHAP_API_TOKEN = env('SHIPSHAP_API_TOKEN')
 PESAPAL_SANDBOX_URL = env('PESAPAL_SANDBOX_URL')
 PESAPAL_LIVE_URL = env('PESAPAL_LIVE_URL')
 PESAPAL_CONSUMER_KEY = env('PESAPAL_CONSUMER_KEY')
@@ -161,6 +163,14 @@ CSRF_TRUSTED_ORIGINS = [
     'https://sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',
     'https://sevaria.co.ke',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.sevaria.co,ke'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'hello@sevaria.co.ke'
+EMAIL_HOST_PASSWORD = 'Jl959js$6'
+
 
 
 

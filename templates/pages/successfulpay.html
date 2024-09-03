@@ -1,6 +1,24 @@
-
+{% extends "navigation/base.html" %}
+{% load static %}
 {% block content %}
 
-paid
+<div class="confirmation-page">
+    <div class="confirmation-container">
+        <img src="{% static 'images/success-icon.png' %}" alt="Success" class="success-icon">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your purchase.</p>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <p>Order ID: <strong>{{ order.id }}</strong></p>
+            <p>Total Amount Paid: <strong>${{ order.total_price }}</strong></p>
+            <p>Payment Status: <strong>{{ order.payment_status }}</strong></p>
+            <p>Estimated Delivery: <strong>{{ order.estimated_delivery_date }}</strong></p>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn-primary">Continue Shopping</a>
+        <a href="{% url 'order_details' order.id %}" class="btn-secondary">View Order Details</a>
+    </div>
+</div>
     
 {% endblock content %}

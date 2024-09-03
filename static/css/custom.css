@@ -462,3 +462,81 @@ html {
 
 
 
+.confirmation-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.confirmation-container {
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.success-icon {
+    width: 80px;
+    margin-bottom: 20px;
+}
+
+.confirmation-container h1 {
+    font-size: 28px;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.confirmation-container p {
+    font-size: 18px;
+    color: #333;
+}
+
+.order-summary {
+    text-align: left;
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.order-summary h2 {
+    font-size: 22px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.order-summary p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #007bff;
+    color: white;
+}
+
+
+
