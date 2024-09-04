@@ -240,7 +240,13 @@
     
     document.querySelector('#order-summary-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
-    
+        const shippingSelect = document.getElementById('shipping-rates');
+
+        // Check if a shipping option is selected
+        if (!shippingSelect.value) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a shipping option.');
+        }
         const form = document.querySelector('#payment-form');
         const orderSummaryForm = document.querySelector('#order-summary-form');
         const formData = new FormData(form);
