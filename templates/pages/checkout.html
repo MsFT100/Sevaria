@@ -241,56 +241,68 @@
     document.querySelector('#order-summary-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
         const shippingSelect = document.getElementById('shipping-rates');
+        const totalshipprice = document.getElementById('total_shipping_price');
+        const price = document.getElementById('total_price');
 
+        if(price.value == totalshipprice.value){
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a shipping option.');
+        }else{
+            const form = document.querySelector('#payment-form');
+            const orderSummaryForm = document.querySelector('#order-summary-form');
+            const formData = new FormData(form);
+            const orderSummaryData = new FormData(orderSummaryForm);
+            const errorMessage = document.getElementById('error-message');
+
+            
+            console.log(orderSummaryData);
+            // Append order summary data to form data
+            for (let [key, value] of orderSummaryData.entries()) {
+                formData.append(key, value);
+            }
+        
+            // Log form data for debugging
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+        
+            fetch("{% url 'checkout-api' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;  // Redirect to PesaPal payment page
+                } else if (data.error) {
+                    errorMessage.textContent = 'Error: ' + data.error;
+                    errorMessage.classList.remove('d-none');
+                } else if (data.errors) {
+                    errorMessage.textContent = 'Form errors: ' + JSON.stringify(data.errors);
+                    errorMessage.classList.remove('d-none');
+                } else {
+                    errorMessage.textContent = 'Unknown error occurred.';
+                    errorMessage.classList.remove('d-none');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = 'An error occurred during payment initiation. Please try again.';
+                errorMessage.classList.remove('d-none');
+            });
+        }
         // Check if a shipping option is selected
         if (!shippingSelect.value) {
             event.preventDefault(); // Prevent form submission
             alert('Please select a shipping option.');
+            
         }
-        const form = document.querySelector('#payment-form');
-        const orderSummaryForm = document.querySelector('#order-summary-form');
-        const formData = new FormData(form);
-        const orderSummaryData = new FormData(orderSummaryForm);
-        const errorMessage = document.getElementById('error-message');
         
-        console.log(orderSummaryData);
-        // Append order summary data to form data
-        for (let [key, value] of orderSummaryData.entries()) {
-            formData.append(key, value);
-        }
-    
-        // Log form data for debugging
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-    
-        fetch("{% url 'checkout-api' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.redirect_url) {
-                window.location.href = data.redirect_url;  // Redirect to PesaPal payment page
-            } else if (data.error) {
-                errorMessage.textContent = 'Error: ' + data.error;
-                errorMessage.classList.remove('d-none');
-            } else if (data.errors) {
-                errorMessage.textContent = 'Form errors: ' + JSON.stringify(data.errors);
-                errorMessage.classList.remove('d-none');
-            } else {
-                errorMessage.textContent = 'Unknown error occurred.';
-                errorMessage.classList.remove('d-none');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            errorMessage.textContent = 'An error occurred during payment initiation. Please try again.';
-            errorMessage.classList.remove('d-none');
-        });
+        
+        
     });
     
 
@@ -348,7 +360,7 @@
             // Populate shipping rates dropdown
             let ratesContainer = document.getElementById('shipping-rates');
             ratesContainer.innerHTML = ''; // Clear previous rates
-            data.rates.forEach(rate => {
+            data.rates.forEach((rate, index) => {
                 let option = document.createElement('option');
                 option.value = rate.id;
                 option.text = `${rate.service.name} - ${rate.currency} ${rate.amount} (${rate.service.terms})`;
@@ -362,6 +374,10 @@
                 option.setAttribute('data-token', rate.service.token);
                 option.setAttribute('data-terms', rate.service.terms);
                 option.setAttribute('data-provider-image', rate.service.provider_image);
+                // Select the first option by default
+                if (index === 0) {
+                    option.selected = true;
+                }
                 ratesContainer.appendChild(option);
                 });
 
@@ -372,6 +388,7 @@
             } else {
                 errorMessage.style.display = 'none'; // Hide error message if rates are populated
             }
+            
         })
         .catch(errors => {
             console.error('Error fetching shipping rates:', errors);
@@ -380,6 +397,7 @@
         });
     });
 
+    
     document.addEventListener('DOMContentLoaded', function() {
         const shippingRatesSelect = document.getElementById('shipping-rates');
         const totalShippingPriceField = document.getElementById('total_shipping_price');
