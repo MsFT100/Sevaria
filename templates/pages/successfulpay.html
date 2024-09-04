@@ -1,24 +1,103 @@
 {% extends "navigation/base.html" %}
 {% load static %}
+
 {% block content %}
 
-<div class="confirmation-page">
+<style>
+    
+
+    /* Styling for the success icon */
+    .success-icon {
+        width: 80px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    /* Styling the main heading */
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    /* General paragraph styling */
+    p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 10px 0;
+    }
+
+    /* Container for the order summary */
+    .order-summary {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+        text-align: left;
+    }
+
+    /* Styling for the order summary heading */
+    .order-summary h2 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    /* Paragraph styling within the order summary */
+    .order-summary p {
+        margin: 5px 0;
+    }
+
+    /* Button styling for the call-to-action */
+    .btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #ff3b3b !important;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        margin-top: 20px;
+    }
+
+    /* Hover effect for the button */
+    .btn-primary:hover {
+        background-color: rgb(242 235 20) !important;
+        color: #333 !important;
+    }
+
+    .text-success {
+        color: #ff3b3b !important;
+    }
+
+    
+</style>
+
     <div class="confirmation-container">
-        <img src="{% static 'images/success-icon.png' %}" alt="Success" class="success-icon">
-        <h1>Payment Successful!</h1>
-        <p>Thank you for your purchase.</p>
+        <div class="cont-page">
+            <img src="{% static 'images/success-icon.png' %}" alt="Success" class="success-icon">
+            <div class="cont-tittle">
+                <h1>Payment Successful!</h1>
+                <p>Thank you for your purchase.</p>
+                <p>A confirmation email has been sent to your email <strong>{{ order.email }}</strong>.</p>
 
-        <div class="order-summary">
-            <h2>Order Summary</h2>
-            <p>Order ID: <strong>{{ order.id }}</strong></p>
-            <p>Total Amount Paid: <strong>${{ order.total_price }}</strong></p>
-            <p>Payment Status: <strong>{{ order.payment_status }}</strong></p>
-            <p>Estimated Delivery: <strong>{{ order.estimated_delivery_date }}</strong></p>
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <p>Order ID: <strong>{{ order.id }}</strong></p>
+                    <p>Total Amount Paid: <strong>${{ order.total_price }}</strong></p>
+                    <p>Payment Status: <strong class="text-success">Successful</strong></p>
+                </div>
+
+
+
+                <a href="{% url 'shop' %}" class="btn-primary">Continue Shopping</a>
+            </div>
+            
+            
+
+            
         </div>
-
-        <a href="{% url 'home' %}" class="btn-primary">Continue Shopping</a>
         
     </div>
-</div>
-    
+
 {% endblock content %}
