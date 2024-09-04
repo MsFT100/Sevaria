@@ -17,7 +17,10 @@ class Index( View):
         
         return render(request, 'pages/index.html')
     
-
+class Error( View):
+    def get(self, request):
+        
+        return render(request, 'error.html')
 class CheckOut(View):
     def get(self, request):
         return render(request, 'pages/checkout.html')

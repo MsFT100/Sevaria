@@ -39,113 +39,122 @@ ADDRESS_FROM = {
 
 class GetShippingRatesView(View):
     def post(self, request, *args, **kwargs):
-            try:
-                # Parse JSON data from request body
-                data = json.loads(request.body)
-                cart = request.session.get('cart', {})
-                # Initialize form with parsed JSON data
-                form = ShippingForm(data)
+        try:
+            # Parse JSON data from request body
+            data = json.loads(request.body)
+            cart = request.session.get('cart', {})
+            
+            # Debugging output to check cart data
+            print("Cart data received:", cart)
 
-                if form.is_valid():
-                    # Use form.cleaned_data to get validated fields
-                    address = form.cleaned_data.get('shipping_address', '')
-                    first_name = form.cleaned_data.get('first_name', '')
-                    last_name = form.cleaned_data.get('last_name', '')
-                    phone_number = form.cleaned_data.get('phone_number', '')
-                    email = form.cleaned_data.get('email', '')
-                    country = form.cleaned_data.get('country', '')
-                    city = form.cleaned_data.get('city', '')
-                    state = form.cleaned_data.get('state', '')
-                    zip_code = form.cleaned_data.get('zip_code', '')
-                    total_price = form.cleaned_data.get('total_price', '')
+            # Initialize form with parsed JSON data
+            form = ShippingForm(data)
 
-                    print(phone_number)
-                    # Ensure total_price is a valid number
-                    try:
-                        total_price = float(total_price)
-                    except ValueError:
-                        return JsonResponse({"error": "Invalid total price"}, status=400)
+            if form.is_valid():
+                # Use form.cleaned_data to get validated fields
+                address = form.cleaned_data.get('shipping_address', '')
+                first_name = form.cleaned_data.get('first_name', '')
+                last_name = form.cleaned_data.get('last_name', '')
+                phone_number = form.cleaned_data.get('phone_number', '')
+                email = form.cleaned_data.get('email', '')
+                country = form.cleaned_data.get('country', '')
+                city = form.cleaned_data.get('city', '')
+                state = form.cleaned_data.get('state', '')
+                zip_code = form.cleaned_data.get('zip_code', '')
+                total_price = form.cleaned_data.get('total_price', '')
 
-                    # Assume each product in the cart has a weight of 1kg
-                    total_weight = sum(item['quantity'] for item in cart)
+                # Ensure total_price is a valid number
+                try:
+                    total_price = float(total_price)
+                except ValueError:
+                    return JsonResponse({"error": "Invalid total price"}, status=400)
 
-                    # Define the payload for the external API
-                    payload = {
-                        "address_from": ADDRESS_FROM,
-                        "address_to": {
-                            "name": f"{first_name} {last_name}",
-                            "street1": address,
-                            "city": city,
-                            "zip_code": zip_code,
-                            "state": state,
-                            "country": country,
-                            "phone": phone_number,
-                            "email": email,
-                            "is_test": True,
-                            "is_quote_only": True
-                        },
-                        "customs_declaration": {
-                            "contents_type": "clothes",
-                            "non_delivery_option": "test",
-                            "certify_signer": "Sevaria",
-                            "certify": True,
-                            "contents_explanation": "test",
-                            "items": [
-                                {
-                                    "weight_unit": "kg",
-                                    "value_currency": "USD",
-                                    "description": "clothes",
-                                    "quantity": len(cart),
-                                    "net_weight": str(total_weight),
-                                    "value_amount": total_price,
-                                    "origin_country": "KE",
-                                    "is_test": True
-                                }
-                            ],
-                            "incoterm": "test",
-                            "eel_pfc": "test",
-                            "is_test": True
-                        },
-                        "parcels": [
+                # Initialize total_weight
+                total_weight = 0
+
+                # Calculate total weight assuming each product has a weight of 1kg
+                try:
+                    for item_key, item in cart.items():
+                        print(item)
+                        total_weight += item.get('quantity', 0)
+                except (TypeError, KeyError) as e:
+                    print(f"Error accessing cart items: {e}")
+                    return JsonResponse({"error": "Invalid cart items"}, status=400)
+
+                # Define the payload for the external API
+                payload = {
+                    "address_from": ADDRESS_FROM,
+                    "address_to": {
+                        "name": f"{first_name} {last_name}",
+                        "street1": address,
+                        "city": city,
+                        "zip_code": zip_code,
+                        "state": state,
+                        "country": country,
+                        "phone": phone_number,
+                        "email": email,
+                        "is_test": True,
+                        "is_quote_only": True
+                    },
+                    "customs_declaration": {
+                        "contents_type": "clothes",
+                        "non_delivery_option": "return",
+                        "certify_signer": "Sevaria",
+                        "certify": True,
+                        "contents_explanation": "clothing items",
+                        "items": [
                             {
-                                "weight_unit": "lb",
-                                "length": "44",
-                                "width": "33",
-                                "height": "5",
-                                "length_unit": "cm",
-                                "weight": str(total_weight),
+                                "weight_unit": "kg",
+                                "value_currency": "USD",
+                                "description": "clothes",
+                                "quantity": total_weight,  # Total quantity of items
+                                "net_weight": str(total_weight),  # Assuming 1kg per item
+                                "value_amount": total_price,
+                                "origin_country": "KE",
                                 "is_test": True
                             }
                         ],
+                        "incoterm": "DDP",
+                        "eel_pfc": "NOEEI 30.37(a)",
                         "is_test": True
-                    }
+                    },
+                    "parcels": [
+                        {
+                            "weight_unit": "kg",
+                            "length": "44",
+                            "width": "33",
+                            "height": "5",
+                            "length_unit": "cm",
+                            "weight": str(total_weight),  # Total weight of all items
+                            "is_test": True
+                        }
+                    ],
+                    "is_test": True
+                }
 
-                    #print(payload)
-                    headers = {
-                        "accept": "application/json",
-                        "content-type": "application/json",
-                        "Authorization": "Token test_42a045be240808dca7b9b2722a4a00b6d9c9f7f7b6c7b49203b9c5d98cf9e2e2"
-                    }
+                headers = {
+                    "accept": "application/json",
+                    "content-type": "application/json",
+                    "Authorization": "Token test_42a045be240808dca7b9b2722a4a00b6d9c9f7f7b6c7b49203b9c5d98cf9e2e2"
+                }
 
-                    # Make the request to ShipShap API
-                    try:
-                        response = requests.post("https://api.shipshap.com/v1/shipments/", json=payload, headers=headers)
-                        response.raise_for_status()
-                        data = response.json()
-                        
-                        # Extract shipping rates from the response
-                        rates = data.get('rates', [])
-                        print(rates)
-                        return JsonResponse({"rates": rates})
-                    except requests.exceptions.RequestException as e:
-                        print(f"Request failed: {e}")
-                        print(f"Response content: {response.content}")
-                        return JsonResponse({"error": "Failed to get shipping rates"}, status=500)
-                else:
-                    print("Form errors:", form.errors)
-                    return JsonResponse({'errors': form.errors}, status=400)
-            except json.JSONDecodeError:
-                return JsonResponse({"error": "Invalid JSON format"}, status=400)
+                # Make the request to ShipShap API
+                try:
+                    response = requests.post("https://api.shipshap.com/v1/shipments/", json=payload, headers=headers)
+                    response.raise_for_status()
+                    data = response.json()
+
+                    # Extract shipping rates from the response
+                    rates = data.get('rates', [])
+                    return JsonResponse({"rates": rates})
+                except requests.exceptions.RequestException as e:
+                    print(f"Request failed: {e}")
+                    return JsonResponse({"error": "Failed to get shipping rates"}, status=500)
+            else:
+                print("Form errors:", form.errors)
+                return JsonResponse({'errors': form.errors}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON format"}, status=400)
 
 class CheckoutView(View):
     def get(self, request, *args, **kwargs):

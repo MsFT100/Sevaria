@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',
                  'sevaria.co.ke',
                  'localhost',
                  '127.0.0.1',
-                 '8309-105-161-82-183.ngrok-free.app',]
+                 'e337-105-161-82-183.ngrok-free.app',]
 
 
 # Application definition
@@ -160,7 +160,7 @@ PESAPAL_CHECKOUT_URL = env("PESAPAL_CHECKOUT_URL")
 IPN_ID = env('IPN_ID')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://f150-41-212-45-223.ngrok-free.app',
+    'https://e337-105-161-82-183.ngrok-free.app',
     'https://sevaria.co.ke',
 ]
 

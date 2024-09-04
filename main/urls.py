@@ -14,6 +14,7 @@ urlpatterns = [
     path('checkout/', views.CheckOut.as_view(), name='checkout'),
     
     path('paymentresult/', views.SuccessPage.as_view(), name='pay_status'),
+    path('error/', views.Error.as_view(), name='error'),
 
     path('adminlogin/', views.AdminLogin.as_view(), name='admin_login'),
     path('admin/dashboard/', views.AdminDashboard.as_view(), name='admin_dashboard'),

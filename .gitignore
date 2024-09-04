@@ -2,5 +2,8 @@
 /venv
 /usr
 __pycache__/
-.env
+db.sqlite3
+*.log
+*.env
 
+sevaria/.env
