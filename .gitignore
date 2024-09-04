@@ -2,3 +2,5 @@
 /venv
 /usr
 __pycache__/
+.env
+

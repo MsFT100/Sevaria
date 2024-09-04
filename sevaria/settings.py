@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net',
                  'sevaria.co.ke',
                  'localhost',
                  '127.0.0.1',
-                 'f150-41-212-45-223.ngrok-free.app',]
+                 '8309-105-161-82-183.ngrok-free.app',]
 
 
 # Application definition

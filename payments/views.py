@@ -42,7 +42,7 @@ class GetShippingRatesView(View):
             try:
                 # Parse JSON data from request body
                 data = json.loads(request.body)
-
+                cart = request.session.get('cart', {})
                 # Initialize form with parsed JSON data
                 form = ShippingForm(data)
 
@@ -65,6 +65,9 @@ class GetShippingRatesView(View):
                         total_price = float(total_price)
                     except ValueError:
                         return JsonResponse({"error": "Invalid total price"}, status=400)
+
+                    # Assume each product in the cart has a weight of 1kg
+                    total_weight = sum(item['quantity'] for item in cart)
 
                     # Define the payload for the external API
                     payload = {
@@ -92,8 +95,8 @@ class GetShippingRatesView(View):
                                     "weight_unit": "kg",
                                     "value_currency": "USD",
                                     "description": "clothes",
-                                    "quantity": 1,
-                                    "net_weight": "23",
+                                    "quantity": len(cart),
+                                    "net_weight": str(total_weight),
                                     "value_amount": total_price,
                                     "origin_country": "KE",
                                     "is_test": True
@@ -110,7 +113,7 @@ class GetShippingRatesView(View):
                                 "width": "33",
                                 "height": "5",
                                 "length_unit": "cm",
-                                "weight": "12",
+                                "weight": str(total_weight),
                                 "is_test": True
                             }
                         ],
