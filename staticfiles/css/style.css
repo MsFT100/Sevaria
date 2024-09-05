@@ -12,6 +12,7 @@ nav {
     padding: 5px 10px;
     background-color: #be333300;
     color: white;
+    
 }
 
 .dropdown {
@@ -25,6 +26,7 @@ nav {
     color: white;
     min-width: max-content;
     transition: .7s;
+    z-index: 20;
 }
 
 .dropdown:hover .dropdown-content {
