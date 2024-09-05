@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1bb&*-@0^&fntdcejz^@r@^aeqxg+-keyh#8@ks+@pv4c_4jd*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sevariapp-fhe0e8cbfkhxc7hk.eastus-01.azurewebsites.net', 
                  'sevaria.co.ke',
