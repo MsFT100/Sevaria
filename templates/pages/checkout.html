@@ -36,6 +36,7 @@
 
     #error-message {
         display: none; /* Hidden by default */
+        color: red;
     }
 
     /* Button Styling */
@@ -160,7 +161,11 @@
         </div>
 
         <form id="order-summary-form" method="POST">
+
             {% csrf_token %}
+
+            <button id="fetch-shipping-rates-btn" type="button" class="btn btn-primary w-100" onclick="fetchShippingRates()">Fetch Shipping Rates</button>
+
             <div class="form-group mb-4">
                 <label for="shipping-rates" class="form-label">Shipping Rates:</label>
                 <select id="shipping-rates" name="shipping-rates" class="form-control">
@@ -238,6 +243,94 @@
 
 <script>
     
+    //manually update the rates
+    function fetchShippingRates() {
+        const form = document.getElementById('payment-form');
+        const errorMessage = document.getElementById('error-message');
+        const formData = new FormData(form);
+        
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(errorEl => errorEl.remove());
+    
+        // Validate the form fields
+        let isValid = true;
+        let formEntries = {};
+        for (let [key, value] of formData.entries()) {
+            formEntries[key] = value;
+            if (!value) {
+                isValid = false;
+            }
+        }
+    
+        if (!isValid) {
+            errorMessage.textContent = "Please fill in all required fields.";
+            errorMessage.style.display = 'block';
+            return;
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    
+        // Fetch shipping rates
+        fetch("{% url 'get_shipping_rates' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formEntries)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Shipping rates response:', data); // Log response for debugging
+    
+            // Check if data is correctly received and has the expected structure
+            if (!data.rates || !Array.isArray(data.rates) || data.rates.length === 0) {
+                console.error('No shipping rates received or data format incorrect.');
+                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+    
+            // Populate shipping rates dropdown
+            let ratesContainer = document.getElementById('shipping-rates');
+            ratesContainer.innerHTML = ''; // Clear previous rates
+            data.rates.forEach((rate, index) => {
+                let option = document.createElement('option');
+                option.value = rate.id;
+                option.text = `${rate.service.name} - ${rate.currency} ${rate.amount} (${rate.service.terms})`;
+                option.setAttribute('data-price', rate.amount);
+                option.setAttribute('data-currency', rate.currency);
+                option.setAttribute('data-amount-local', rate.amount_local);
+                option.setAttribute('data-estimated-days', rate.estimated_days);
+                console.log(rate.estimated_days)
+                option.setAttribute('data-service-name', rate.service.name);
+                option.setAttribute('data-provider', rate.service.provider);
+                option.setAttribute('data-token', rate.service.token);
+                option.setAttribute('data-terms', rate.service.terms);
+                option.setAttribute('data-provider-image', rate.service.provider_image);
+                // Select the first option by default
+                if (index === 0) {
+                    option.selected = true;
+                }
+                ratesContainer.appendChild(option);
+            });
+    
+            // Check if no rates were added
+            if (ratesContainer.options.length === 0) {
+                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none'; // Hide error message if rates are populated
+            }
+            
+        })
+        .catch(errors => {
+            console.error('Error fetching shipping rates:', errors);
+            errorMessage.textContent = 'An error occurred while fetching shipping rates. Please try again.';
+            errorMessage.style.display = 'block';
+        });
+    }
+    
     document.querySelector('#order-summary-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
         const shippingSelect = document.getElementById('shipping-rates');
@@ -310,92 +403,7 @@
 
     let previousShippingCost = 0;
 
-    document.getElementById('zip_code').addEventListener('change', function() {
-        const form = document.getElementById('payment-form');
-        const errorMessage = document.getElementById('error-message');
-        const formData = new FormData(form);
-        
-        // Clear previous errors
-        document.querySelectorAll('.error-text').forEach(errorEl => errorEl.remove());
-
-        // Validate the form fields
-        let isValid = true;
-        let formEntries = {};
-        for (let [key, value] of formData.entries()) {
-            formEntries[key] = value;
-            if (!value) {
-                isValid = false;
-            }
-        }
-
-        if (!isValid) {
-            errorMessage.textContent = "Please fill in all required fields.";
-            errorMessage.style.display = 'block';
-            return;
-        } else {
-            errorMessage.style.display = 'none';
-        }
-
-        // Fetch shipping rates
-        fetch("{% url 'get_shipping_rates' %}", {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formEntries)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Shipping rates response:', data); // Log response for debugging
-
-            // Check if data is correctly received and has the expected structure
-            if (!data.rates || !Array.isArray(data.rates) || data.rates.length === 0) {
-                console.error('No shipping rates received or data format incorrect.');
-                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            // Populate shipping rates dropdown
-            let ratesContainer = document.getElementById('shipping-rates');
-            ratesContainer.innerHTML = ''; // Clear previous rates
-            data.rates.forEach((rate, index) => {
-                let option = document.createElement('option');
-                option.value = rate.id;
-                option.text = `${rate.service.name} - ${rate.currency} ${rate.amount} (${rate.service.terms})`;
-                option.setAttribute('data-price', rate.amount);
-                option.setAttribute('data-currency', rate.currency);
-                option.setAttribute('data-amount-local', rate.amount_local);
-                option.setAttribute('data-estimated-days', rate.estimated_days);
-                console.log(rate.estimated_days)
-                option.setAttribute('data-service-name', rate.service.name);
-                option.setAttribute('data-provider', rate.service.provider);
-                option.setAttribute('data-token', rate.service.token);
-                option.setAttribute('data-terms', rate.service.terms);
-                option.setAttribute('data-provider-image', rate.service.provider_image);
-                // Select the first option by default
-                if (index === 0) {
-                    option.selected = true;
-                }
-                ratesContainer.appendChild(option);
-                });
-
-            // Check if no rates were added
-            if (ratesContainer.options.length === 0) {
-                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none'; // Hide error message if rates are populated
-            }
-            
-        })
-        .catch(errors => {
-            console.error('Error fetching shipping rates:', errors);
-            errorMessage.textContent = 'An error occurred while fetching shipping rates. Please try again.';
-            errorMessage.style.display = 'block';
-        });
-    });
+    document.getElementById('zip_code').addEventListener('change', fetchShippingRates);
 
     
     document.addEventListener('DOMContentLoaded', function() {
