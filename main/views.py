@@ -204,7 +204,7 @@ def send_order_confirmation_email(self, order):
 def send_admin_order_confirmation_email(self, order):
         subject = 'An order has been placed'
 
-        recipient = 'bryankmn@gmail.com'  # Use the email associated with the order
+        recipient = 'sevariastudios@gmail.com'  # Use the email associated with the order
         context = {
             'order': order,
             'order_items': order.items.all(),  # Assuming Order model has related items
