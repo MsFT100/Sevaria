@@ -51,7 +51,7 @@
       {% include "navigation/navigation.html" %}
     <main class="container-full">
       {% block content %} {% endblock content %}
-      {% include 'navigation/footer.html' %}
+      
       <!-- Floating Cart Container -->
       <div class="cart-a-container" id="cart-a">
         <form id="payment-form" method="POST">
@@ -81,7 +81,7 @@
         </div> 
       </div>
     </main>
-      
+      {% include 'navigation/footer.html' %}
     
   
     <!--   Core JS Files   -->
