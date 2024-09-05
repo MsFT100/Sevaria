@@ -193,7 +193,7 @@
     position: relative;
     width: 100%;
     height: 130vh; /* Full viewport height */
-    background-image: url('/static/image/BackgroundImage.PNG'); /* Replace with your image path */
+    background-image: url("/static/image/BackgroundImage.4d09cc488f5a.PNG"); /* Replace with your image path */
     background-size: cover; /* Cover the entire container */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent repeating the background image */
@@ -401,7 +401,7 @@
     }
     .background-image {
         /* Full viewport height */
-        background-image: url('/static/image/backgroundMobile.jpg'); /* Replace with your image path */
+        background-image: url("/static/image/backgroundMobile.215b92423080.jpg"); /* Replace with your image path */
         background-size: cover; /* Cover the entire container */
         background-position: center; /* Center the background image */
         background-repeat: no-repeat; /* Prevent repeating the background image */
