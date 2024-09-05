@@ -1,0 +1,44 @@
+{% extends "navigation/base.html" %}
+{% block content %}
+
+<style>
+    .container {
+        max-width: 700px;
+        border-radius: 10px;
+        margin-bottom: 10%;
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        height: 100%;
+      }
+      h2 {
+        font-size: 24px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        color: red;
+      }
+      .pi {
+        font-size: 16px;
+        line-height: 1.6;
+        color: black;
+      }
+</style>
+<div class="container">
+    <h2>Return Policy</h2>
+    <p class="pi">Please note that all sales are final.</p>
+  
+    <h2>Tracking Your Order</h2>
+    <p class="pi" >Once your order has been processed for shipment, you will be sent a DHL tracking number for international orders or local courier information for deliveries in Kenya.</p>
+  
+    <h2>Shipping Prices</h2>
+    <p class="pi">Shipping prices are calculated on checkout and will vary according to the destination of shipment.</p>
+  
+    <h2>Customs & Import Duties</h2>
+    <p class="pi">All items are shipped from Kenya, the customs and import duties may be levied by your local government. All customs and import duties are the responsibility of the person purchasing (these can range from 20% to 40% of the order value).</p>
+</div>
+
+{% endblock content %}
+
+
+

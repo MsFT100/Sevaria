@@ -16,7 +16,11 @@ class Index( View):
     def get(self, request):
         
         return render(request, 'pages/index.html')
-    
+
+class ShippingInfo( View):
+    def get(self, request):
+        
+        return render(request, 'pages/shipping_info.html')
 class Error( View):
     def get(self, request):
         
