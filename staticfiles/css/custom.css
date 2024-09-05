@@ -412,7 +412,11 @@
         height: max-content;
     }
 }
-
+@media screen and (max-width: 991.5px) {
+    .container, .container-full {
+        height: max-content;
+    }
+}
 .zoomable { 
     border-radius: 10px; 
 
