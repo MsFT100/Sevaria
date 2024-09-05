@@ -39,13 +39,15 @@ class SuccessPage(View):
         # Query the database for the order
         order = get_object_or_404(Order, transaction_reference=tracking_id)
         #clear the cart
-        #clear_cart()
+        clear_cart()
 
         #send the email
         order.payment_status = 'Completed'
+        order.tracking_id = tracking_id
         order.save()
         
         send_order_confirmation_email(self,order)
+        send_admin_order_confirmation_email(self,order)
         # Pass order details to the template
         context = {
             'order': order,
@@ -192,6 +194,23 @@ def send_order_confirmation_email(self, order):
         }
         # Render email content from a template
         html_message = render_to_string('emails/order_confirmation.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to = recipient
+
+        send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+
+def send_admin_order_confirmation_email(self, order):
+        subject = 'An order has been placed'
+
+        recipient = 'bryankmn@gmail.com'  # Use the email associated with the order
+        context = {
+            'order': order,
+            'order_items': order.items.all(),  # Assuming Order model has related items
+        }
+        # Render email content from a template
+        html_message = render_to_string('emails/admin_success_confirmation.html', context)
         plain_message = strip_tags(html_message)
         from_email = settings.DEFAULT_FROM_EMAIL
         to = recipient
