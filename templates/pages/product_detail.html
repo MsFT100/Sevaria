@@ -50,12 +50,43 @@
         padding: 1rem;
     }
 
+    
+    .product-subtitle {
+        font-size: 18px;
+        color: white;
+        background-color: red;
+        max-width: fit-content;
+        padding: 4px;
+        border-radius: 2px;
+    }
+    .size-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.size-guide-link {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.size-guide-link:hover {
+    text-decoration: underline;
+    color: #E8BC0E;
+}
+
     .product-info h1 {
         font-size: 2rem;
         margin-bottom: 1rem;
         color: white;
         
     }
+    .size-title {
+    font-size: 14px;
+    font-weight: bold;
+    color:white;
+}
     .product-info p {
         
         margin-bottom: 1rem;
@@ -189,9 +220,14 @@
         </div>
         
         <div class="product-info">
+            <div class="product-subtitle">Exclusive Made to Order</div> 
             <h1>{{ product.name }}</h1>
             <p class="price">Price: ${{ product.price }}</p>
             <p class="fabric-composition">Fabric composition: {{ product.description }}</p>
+            <div class="size-header">
+                <div class="size-title">SIZE</div>
+                <a href="Sevaria-Size-Guide.pdf" class="size-guide-link">View Size Guide</a>
+            </div>
             
             <div class="shop-product">
                 <!-- Display product sizes if available -->
