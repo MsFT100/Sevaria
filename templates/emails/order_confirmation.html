@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+        }
+        p {
+            color: #555555;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-details li {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #dddddd;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Thank you for your Purchase, {{ order.first_name }} {{ order.last_name }}!</h2>
+        <p>Your order ID is <strong>{{ order.id }}</strong> and the total amount is <strong>${{ order.total_price }}</strong>.</p>
+        <p>Your transaction Reference is <strong>{{ order.transaction_reference }}</strong>.</p>
+        <p>Your product delivery terms are <strong>{{ order.shipping_terms }}</strong>.</p>
+        <p>Delivery Provider <strong>{{ order.shipping_provider }}</strong>.</p>
+        <div class="order-details">
+            <h3>Order Details:</h3>
+            <ul>
+                {% for item in order_items %}
+                <br>
+                <li>
+                    {{ item.quantity }} x {{ item.product.name }} ({{ item.product_variant.size }} - {{ item.product_variant.color }})
+                </li>
+                <br>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <p>We are preparing your order for shipping and will notify you once it's on the way!</p>
+        <p>If you have any questions, feel free to contact us at hello@sevaria.co.ke.</p>
+
+        <div class="footer">
+            <p>Best regards,<br>Sevaria Team</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,507 @@
+{% extends "navigation/base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #35722f; /* Dark background */
+        color: #ffffff; /* White text for better readability */
+    }
+
+    label {
+        color: white;
+    }
+
+    .custom-container {
+        background-color: #35722f; /* Slightly lighter background for form container */
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 600px; /* Constrain the container width for better readability */
+        margin: auto; /* Center the container */
+    }
+
+    .form-label {
+        font-size: 1.1rem; /* Slightly larger font for labels */
+    }
+
+    .form-control {
+        padding: 12px; /* Increase padding for input fields */
+        font-size: 1.1rem; /* Larger font size for inputs */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    .form-group {
+        margin-bottom: 25px; /* Increase space between form groups */
+    }
+
+    #error-message {
+        display: none; /* Hidden by default */
+        color: red;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #ff3b3b !important; /* Override with !important */
+        border: none !important;
+        padding: 15px 20px !important;
+        font-size: 1.1rem !important;
+        border-radius: 5px !important;
+        color: white;
+        cursor: pointer !important;
+    }
+
+    .btn-primary:hover {
+        background-color: white !important; /* Darker green on hover */
+        color: black !important;
+    }
+
+    .btn-primary:active {
+        background-color: #3e8e41; /* Even darker green on active */
+        box-shadow: 0 5px #666; /* Add a shadow to the button on click */
+        transform: translateY(4px); /* Push button down slightly on click */
+    }
+
+    .collapsible {
+        background-color: #6c8e4f; /* A different shade for the button */
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #57783a; /* Darker shade on hover */
+    }
+
+    .content {
+        display: none;
+        overflow: hidden;
+        padding: 0 18px;
+        background-color: #35722f;
+        border-radius: 5px;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+
+<div class="container-md">
+    <div class="custom-container">
+        <h2 class="text-center">Checkout</h2>
+
+        <!-- Collapsible Button -->
+        <button type="button" class="collapsible"> Add your Shipping Details</button>
+        <div class="content">
+            <form id="payment-form" method="POST">
+                {% csrf_token %}
+                <div id="error-message" class="alert alert-danger ">Alert here</div>
+                
+                <div class="form-group">
+                    <label for="first_name" class="form-label">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="form-label">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number" class="form-label">Phone:</label>
+                    <input type="tel" id="phone_number" name="phone_number" class="form-control" value="{{ user.profile.phone_number }}" required>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="country" class="form-label">Country:</label>
+                    <select id="country" name="country" class="form-control" required>
+                        <option value="">Select a country</option>
+                    </select>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="state" class="form-label">State:</label>
+                    <input type="text" id="state" name="state" class="form-control" value="" required>
+                </div>
+                <div class="form-group">
+                    <label for="street1" class="form-label">Street Address:</label>
+                    <input type="street1" id="street1" name="street1" class="form-control" value="" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="city" class="form-label">City:</label>
+                    <input type="text" id="city" name="city" class="form-control" value="" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="zip_code" class="form-label">Zip Code:</label>
+                    <input type="text" id="zip_code" name="zip_code" class="form-control" value="" required>
+                </div>
+                <div class="form-group">
+                    <label for="total_shipping_price" class="form-label">Total Price:</label>
+                    <input type="text" id="total_shipping_price" name="total_shipping_price" class="form-control" value="{{ total_price }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="total_price" class="form-label">Total Price + Shipping Fees:</label>
+                    <input type="text" id="total_price" name="total_price" class="form-control" value="{{ total_price }}" readonly>
+                </div>
+
+                <!-- Hidden inputs for shipping details -->
+            
+
+
+            </form>
+        </div>
+
+        <form id="order-summary-form" method="POST">
+
+            {% csrf_token %}
+
+            <button id="fetch-shipping-rates-btn" type="button" class="btn btn-primary w-100" onclick="fetchShippingRates()">Fetch Shipping Rates</button>
+
+            <div class="form-group mb-4">
+                <label for="shipping-rates" class="form-label">Shipping Rates:</label>
+                <select id="shipping-rates" name="shipping-rates" class="form-control">
+                    <option value="">Select a shipping option</option>
+                </select>
+            </div>
+            
+            <input type="hidden" id="shipping_service_name" name="shipping_service_name">
+            <input type="hidden" id="shipping_provider" name="shipping_provider">
+            <input type="hidden" id="shipping_token" name="shipping_token">
+            <input type="hidden" id="shipping_terms" name="shipping_terms">
+            <input type="hidden" id="shipping_provider_image" name="shipping_provider_image">
+            <input type="hidden" id="shipping_currency" name="shipping_currency">
+            <input type="hidden" id="shipping_amount" name="shipping_amount">
+            <input type="hidden" id="shipping_amount_local" name="shipping_amount_local">
+            <input type="hidden" id="shipping_estimated_days" name="shipping_estimated_days">
+
+            <input type="submit" value="Pay Now" class="btn btn-primary w-100">
+        </form>
+
+        
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+<script>
+    const phoneInputField = document.querySelector("#phone_number");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        initialCountry: "auto",
+        geoIpLookup: function(callback) {
+            fetch('https://ipinfo.io/json')
+                .then(response => response.json())
+                .then(data => callback(data.country))
+                .catch(() => callback('us'));
+        },
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const countrySelect = document.getElementById('country');
+
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.cca2; // Country code
+                    option.textContent = country.name.common; // Country name
+                    countrySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching country data:', error));
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var coll = document.querySelectorAll(".collapsible");
+        coll.forEach(function(button) {
+            button.addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    
+    //manually update the rates
+    function fetchShippingRates() {
+        const form = document.getElementById('payment-form');
+        const errorMessage = document.getElementById('error-message');
+        const formData = new FormData(form);
+        
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(errorEl => errorEl.remove());
+    
+        // Validate the form fields
+        let isValid = true;
+        let formEntries = {};
+        for (let [key, value] of formData.entries()) {
+            formEntries[key] = value;
+            if (!value) {
+                isValid = false;
+            }
+        }
+    
+        if (!isValid) {
+            errorMessage.textContent = "Please fill in all required fields.";
+            errorMessage.style.display = 'block';
+            return;
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    
+        // Fetch shipping rates
+        fetch("{% url 'get_shipping_rates' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formEntries)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Shipping rates response:', data); // Log response for debugging
+    
+            // Check if data is correctly received and has the expected structure
+            if (!data.rates || !Array.isArray(data.rates) || data.rates.length === 0) {
+                console.error('No shipping rates received or data format incorrect.');
+                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+    
+            // Populate shipping rates dropdown
+            let ratesContainer = document.getElementById('shipping-rates');
+            ratesContainer.innerHTML = ''; // Clear previous rates
+            data.rates.forEach((rate, index) => {
+                let option = document.createElement('option');
+                option.value = rate.id;
+                option.text = `${rate.service.name} - ${rate.currency} ${rate.amount} (${rate.service.terms})`;
+                option.setAttribute('data-price', rate.amount);
+                option.setAttribute('data-currency', rate.currency);
+                option.setAttribute('data-amount-local', rate.amount_local);
+                option.setAttribute('data-estimated-days', rate.estimated_days);
+                console.log(rate.estimated_days)
+                option.setAttribute('data-service-name', rate.service.name);
+                option.setAttribute('data-provider', rate.service.provider);
+                option.setAttribute('data-token', rate.service.token);
+                option.setAttribute('data-terms', rate.service.terms);
+                option.setAttribute('data-provider-image', rate.service.provider_image);
+                // Select the first option by default
+                if (index === 0) {
+                    option.selected = true;
+                }
+                ratesContainer.appendChild(option);
+            });
+    
+            // Check if no rates were added
+            if (ratesContainer.options.length === 0) {
+                errorMessage.textContent = 'No shipping rates available. Please check your address details.';
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none'; // Hide error message if rates are populated
+            }
+            
+        })
+        .catch(errors => {
+            console.error('Error fetching shipping rates:', errors);
+            errorMessage.textContent = 'An error occurred while fetching shipping rates. Please try again.';
+            errorMessage.style.display = 'block';
+        });
+    }
+    
+    document.querySelector('#order-summary-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        const shippingSelect = document.getElementById('shipping-rates');
+        const totalshipprice = document.getElementById('total_shipping_price');
+        const price = document.getElementById('total_price');
+
+        if(price.value == totalshipprice.value){
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a shipping option.');
+        }else{
+            const form = document.querySelector('#payment-form');
+            const orderSummaryForm = document.querySelector('#order-summary-form');
+            const formData = new FormData(form);
+            const orderSummaryData = new FormData(orderSummaryForm);
+            const errorMessage = document.getElementById('error-message');
+
+            
+            console.log(orderSummaryData);
+            // Append order summary data to form data
+            for (let [key, value] of orderSummaryData.entries()) {
+                formData.append(key, value);
+            }
+        
+            // Log form data for debugging
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+        
+            fetch("{% url 'checkout-api' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;  // Redirect to PesaPal payment page
+                } else if (data.error) {
+                    errorMessage.textContent = 'Error: ' + data.error;
+                    errorMessage.classList.remove('d-none');
+                } else if (data.errors) {
+                    errorMessage.textContent = 'Form errors: ' + JSON.stringify(data.errors);
+                    errorMessage.classList.remove('d-none');
+                } else {
+                    errorMessage.textContent = 'Unknown error occurred.';
+                    errorMessage.classList.remove('d-none');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = 'An error occurred during payment initiation. Please try again.';
+                errorMessage.classList.remove('d-none');
+            });
+        }
+        // Check if a shipping option is selected
+        if (!shippingSelect.value) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a shipping option.');
+            
+        }
+        
+        
+        
+    });
+    
+
+    
+
+    let previousShippingCost = 0;
+
+    document.getElementById('zip_code').addEventListener('change', fetchShippingRates);
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const shippingRatesSelect = document.getElementById('shipping-rates');
+        const totalShippingPriceField = document.getElementById('total_shipping_price');
+        const totalPriceField = document.getElementById('total_price');
+        const errorMessage = document.getElementById('error-message');
+    
+        if (shippingRatesSelect) {
+            shippingRatesSelect.addEventListener('change', function() {
+                const selectedRate = this.options[this.selectedIndex];
+                if (!selectedRate) return;
+    
+                const shippingCost = parseFloat(selectedRate.getAttribute('data-price')) || 0;
+                const basePrice = parseFloat(totalShippingPriceField ? totalShippingPriceField.value : '0') || 0;
+    
+                // Extract all necessary shipping details
+                const shippingDetails = {
+                    id: selectedRate.value,
+                    name: selectedRate.getAttribute('data-service-name'),
+                    provider: selectedRate.getAttribute('data-provider'),
+                    token: selectedRate.getAttribute('data-token'),
+                    terms: selectedRate.getAttribute('data-terms'),
+                    providerImage: selectedRate.getAttribute('data-provider-image'),
+                    currency: selectedRate.getAttribute('data-currency'),
+                    amount: selectedRate.getAttribute('data-price'),
+                    amountLocal: selectedRate.getAttribute('data-amount-local'),
+                    estimatedDays: selectedRate.getAttribute('data-estimated-days')
+                };
+    
+                // Populate hidden fields if they exist
+                ['shipping_service_name', 'shipping_provider', 'shipping_token', 'shipping_terms', 
+                 'shipping_provider_image', 'shipping_currency', 'shipping_amount', 
+                 'shipping_amount_local', 'shipping_estimated_days'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.value = shippingDetails[id.replace('shipping_', '')] || '';
+                    }
+                });
+    
+                console.log(shippingCost);
+    
+                // Ensure shippingCurrency is defined and valid
+                const shippingCurrency = shippingDetails.currency || 'USD';
+    
+                // Convert the shipping cost to USD if it's not already in USD
+                if (shippingCurrency !== 'USD') {
+                    fetch("{% url 'convertcurrency' %}", {  // Adjust to your backend endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        },
+                        body: JSON.stringify({
+                            amount: shippingCost,
+                            fromCurrency: shippingCurrency,
+                            toCurrency: 'USD'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const convertedAmount = data.convertedAmount;
+                        const newTotal = basePrice + convertedAmount;
+    
+                        console.log(convertedAmount);
+                        // Update the total price on the form
+                        if (totalPriceField) {
+                            totalPriceField.value = newTotal.toFixed(2);
+                        }
+    
+                        previousShippingCost = shippingCost;
+                    })
+                    .catch(error => {
+                        console.error('Currency conversion error:', error);
+                        if (errorMessage) {
+                            errorMessage.textContent = 'Failed to convert currency. Please try again.';
+                            errorMessage.style.display = 'block';
+                        }
+                    });
+                } else {
+                    const newTotal = basePrice + shippingCost;
+    
+                    // Update the total price on the form
+                    if (totalPriceField) {
+                        totalPriceField.value = newTotal.toFixed(2);
+                    }
+    
+                    previousShippingCost = shippingCost;
+                }
+            });
+        }
+    });
+    
+//order order-summary-form
+
+    
+
+
+</script>
+
+{% endblock %}

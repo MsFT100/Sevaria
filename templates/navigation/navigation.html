@@ -1,0 +1,27 @@
+{% load static %}
+{% block content %}
+
+<header>
+  <nav>
+    <div class="dropdown">
+      <a href="#" id="dropdownMenu" class="hover-effect">&#9776;</a>
+      <div class="dropdown-content">
+        <a href="{% url 'home' %}">Home </a>
+        <a href="{% url 'shop' %}">Shop </a>
+        <a href="{% url "Bags" %}">Bags </a>
+      </div>
+    </div>
+    
+    <div class="brand">
+      <a href="{% url 'about' %}" class="hover-effect-title">SEVARIA FASHIONS  &#8599;</a>
+    </div>
+    
+    <div class="icons">
+      
+      <a href="#" class="hover-effect" ><i class="fa fa-shopping-cart" onclick="openCart()"></i></a>
+    </div>
+  </nav>
+  
+</header>
+
+{% endblock content %}

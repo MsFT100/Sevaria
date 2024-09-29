@@ -1,0 +1,52 @@
+{% extends "navigation/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .container-full{
+        height: 100%;
+    }
+</style>
+<div class="content">
+    <div class="product-grid">
+        {% for product in products %}
+            <a href="{% url 'product_detail' product.id %}" class="product-card-link">
+                <div class="product-card">
+                    {% if product.image %}
+                        <img data-src="{{ product.image.url }}" alt="{{ product.name }}" class="lazyload" >
+                    {% else %}
+                        <img data-src="{% static 'img/logoproduct.png' %}" alt="Default Image" class="lazyload" >
+                    {% endif %}
+                    <div class="caption">
+                        <h6>{{ product.name }}</h6>
+                        <p><strong>${{ product.price }}</strong></p>
+                    </div>
+                </div>
+            </a>
+        {% empty %}
+            <p>No bags available at the moment.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const productCards = document.querySelectorAll('.product-card');
+        function showCardsOnScroll() {
+            productCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight;
+                if (cardPosition < screenPosition) {
+                    setTimeout(() => {
+                        card.style.opacity = 1;
+                        card.style.transform = 'translateY(0)';
+                    }, index * 150);
+                }
+            });
+        }
+        window.addEventListener('scroll', showCardsOnScroll);
+        showCardsOnScroll();
+    });
+</script>
+
+{% endblock content %}

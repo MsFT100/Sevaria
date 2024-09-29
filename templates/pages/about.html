@@ -1,0 +1,21 @@
+{% extends "navigation/base.html" %}
+{% load static %}
+{% block content %}
+<div class="column-set">
+    <div class="column-unit" style="flex: 1 1 25%;">
+        <img class="zoomable" src="{% static 'image/jamie.jpg' %}" alt="Jamie Bryan Kimani" loading="lazy">
+        <h3>Jamie Bryan Kimani.</h3> 
+        <p>Creative Director</p>
+    </div>
+    <div class="column-unit-contact-info" style="flex: 1 1 25%;">
+        <span><a href="#" rel="history">→ Email:</a> <p>Sevariastudios@gmail.com</p></span>
+        <span><a href="https://www.instagram.com/sevaria.ke?igsh=MXMxN3gzN3c5dTg1aw==" target="_blank">→ Instagram:</a> <p>sevaria.ke</p></span>
+        <span><a href="#" target="_blank">→ Location:</a> <p>331 Hillcrest Drive (by appointment only)</p> </span>
+    </div>
+    <div class="column-unit brand-description" style="flex: 1 1 50%;">
+        <h1>Sevaria is a Kenyan based fashion brand exploring vernacular fashion and evoking afro-nostalgia.<br>
+        The brand was established in October 2020.</h1>
+    </div>
+</div>
+
+{% endblock content %}

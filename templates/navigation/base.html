@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sevaria</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <!-- plugins:css -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/plugins.min.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/kaiadmin.min.css' %}">
+    
+    <!-- inject:css -->
+    <!-- endinject -->
+    
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'image/logo.svg'%}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'image/logo.svg'%}" />
+    <!-- Fonts and icons -->
+    <script src="{% static 'js/plugin/webfont/webfont.min.js'%} "></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'css/fonts.min.css'%}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+    
+</head>
+<body>
+    
+    
+    
+      {% include "navigation/navigation.html" %}
+    <main class="container-full">
+      {% block content %} {% endblock content %}
+      
+      <!-- Floating Cart Container -->
+      <div class="cart-a-container" id="cart-a">
+        <form id="payment-form" method="POST">
+          {% csrf_token %}
+          <span class="close-btn" onclick="closeCart()">×</span>
+        </form>
+        
+        
+        
+
+        <h3>My Cart</h3>
+        <div class="cart-a-content">
+            
+            <!-- List Cart Items -->         
+          <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+          </div>
+
+        </div>
+
+        <div class="cart-footer">
+          <p>Total: $<span id="cartTotal">0</span></p>
+          
+            
+            <a href="{% url "checkout-api" %}" class="checkout-btn">Proceed to Payment</a>
+            <button type="button" id="clear-cart-btn" class="checkout-btn">Clear Cart</button>
+        </div> 
+      </div>
+    </main>
+      {% include 'navigation/footer.html' %}
+    
+  
+    <!--   Core JS Files   -->
+    <script src="{% static 'js/core/jquery-3.7.1.min.js '%} "></script>
+    <script src="{% static 'js/core/popper.min.js '%} "></script>
+    
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js '%} "></script>
+
+   
+    <!-- Bootstrap Notify -->
+    <script src="{% static 'js/plugin/bootstrap-notify/bootstrap-notify.min.js '%} "></script>
+
+    
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'js/plugin/sweetalert/sweetalert.min.js'%} "></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'js/kaiadmin.min.js'%} "></script>
+    <!--Cloud Flare-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+
+    <script>
+      function changeImage(element) {
+          var mainImage = document.getElementById('mainImage');
+          mainImage.src = element.src;
+      }
+  
+      function openSidebar() {
+          document.getElementById('cart').classList.add('open');
+      }
+  
+      function closeSidebar() {
+          document.getElementById('cart').classList.remove('open');
+      }
+      function openNotification() {
+        document.getElementById('alertContainer').classList.add('open');
+    }
+
+    function closeNotification() {
+        document.getElementById('alertContainer').classList.remove('open');
+    }
+  </script>
+
+  <script>
+    function openCart() {
+        const cart = document.getElementById("cart-a");
+        populateCart();
+        cart.style.display = "block";
+        cart.classList.remove("closing");
+        setTimeout(() => {
+            cart.style.transform = "translate(-50%, -50%) scale(1)";
+            closeIndexContent();
+        }, 10); // Trigger reflow to ensure animation
+    }
+
+    function closeCart() {
+        const cart = document.getElementById("cart-a");
+        cart.classList.add("closing");
+        cart.style.transform = "scale(0.1) translate(1100%, -1150%)";
+        setTimeout(() => {
+            cart.style.display = "none";
+            openIndexContent();
+        }, 600); // Match with animation duration
+    }
+    function closeIndexContent() {
+      const cart = document.getElementById("content-index");
+      
+      setTimeout(() => {
+          cart.style.display = "none";
+      }, 300); // Match with animation duration
+    }
+    function openIndexContent() {
+      const cart = document.getElementById("content-index");
+      
+      setTimeout(() => {
+          cart.style.display = "block";
+      }, 600); // Match with animation duration
+    }
+    //populate the cart
+    function populateCart() {
+      const cartItemsContainer = document.getElementById('cartItems');
+      cartItemsContainer.innerHTML = ''; // Clear existing items
+      
+      fetch('/get-cart-items/')  // An endpoint to get the cart items
+          .then(response => response.json())
+          .then(data => {
+            console.log('Cart data:', data);
+              let total = 0;
+              data.cart.forEach(item => {
+                console.log(item);
+                  const itemElement = document.createElement('div');
+                  itemElement.classList.add('cart-item');
+                  itemElement.innerHTML = `
+                      <img src="${item.image_url}" alt="${item.name}">
+                      <div class="cart-item-details">
+                          <p>${item.name}</p>
+                          <p>Price: $${item.price}</p>
+                          <p>Quantity: ${item.quantity}</p>
+                          <p>Size: ${item.size}</p>
+                          <p>Color: ${item.color}</p>
+                      </div>
+                  `;
+                  cartItemsContainer.appendChild(itemElement);
+                  
+                  // Update total
+                  total += parseFloat(item.price) * item.quantity;
+              });
+  
+              // Update total price in the cart footer
+              document.getElementById('cartTotal').textContent = total.toFixed(2);
+          })
+          .catch(error => console.error('Error fetching cart:', error));
+  }
+  
+  </script>
+  <script>
+    document.getElementById('clear-cart-btn').addEventListener('click', function() {
+        fetch("{% url 'clear_cart' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Optionally update the cart UI to show that it is empty
+                document.getElementById('cartItems').innerHTML = ''; // Clear cart items
+                document.getElementById('cartTotal').textContent = '0.00';
+            } else {
+                console.error('Failed to clear the cart.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    </script>
+    
+
+</body>
+</html>

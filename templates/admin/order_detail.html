@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #333;
+        }
+
+        p, ul {
+            margin: 10px 0;
+        }
+
+        .shipping-info {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .order-items {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .order-items th, .order-items td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .order-items th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .order-items tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .order-items tr:hover {
+            background-color: #ddd;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 20px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Details for Order {{ order.id }}</h2>
+
+        <div class="shipping-info">
+            <h3>Shipping Info</h3>
+            <p><strong>Tracking ID:</strong> {{ order.tracking_id }}</p>
+            <p><strong>Shipping Provider:</strong> {{ order.shipping_provider }}</p>
+            <p><strong>Estimated Days:</strong> {{ order.shipping_terms }}</p>
+            <p><strong>Shipping Amount (USD):</strong> {{ order.shipping_amount }}</p>
+            <p><strong>Shipping Currency:</strong> {{ order.shipping_currency }}</p>
+        </div>
+
+        <h3>Items</h3>
+        <table class="order-items">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">No items found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'admin:main_order_changelist' %}" class="button">Back to Orders</a>
+    </div>
+</body>
+</html>
