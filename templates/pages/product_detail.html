@@ -1,5 +1,7 @@
 {% extends "navigation/base.html" %}
+{% load static %}
 {% block content %}
+
 <style>
     /* Container for the product detail */
     .product-detail {
@@ -202,12 +204,63 @@
         border-radius: 5px;
         
     }
+    /* Floating modal for size guide */
+#sizeGuideModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with transparency */
+}
 
-    
+#sizeGuideContent {
+    background-color: #35722f;
+    margin: 10% auto; /* Center vertically and horizontally */
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 1000px;
+    position: relative;
+    text-align: left;
+}
+
+/* Close button inside the modal */
+#sizeGuideClose {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#sizeGuideClose:hover {
+    color: red;
+}
+
+    .sizeImage{
+        width: 400px;
+        height: 400px;
+        background-image: url('/static/image/SevariaSizeGuide.webpg');;
+    }
 </style>
 
 <div class="content">
     
+    <div id="sizeGuideModal">
+        <div id="sizeGuideContent">
+            <span id="sizeGuideClose">&times;</span>
+            <h2>Size Guide</h2>
+            <img  src="{% static 'image/SevariaSizeGuide.webpg' %}" type="image/webp" alt="">
+            <div class="sizeImage"></div>
+            <a href="/static/image/Sevaria_Size_Guide.pdf" target="_blank">Download PDF</a>
+            
+        </div>
+    </div>
     
     <div class="product-detail">
         <div class="product-images">
@@ -216,6 +269,7 @@
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
                 <img src="{{ product.alternate_image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
                 <!-- Add more thumbnails if needed -->
+                
             </div>
         </div>
         
@@ -226,8 +280,8 @@
             <p class="fabric-composition">Fabric composition: {{ product.description }}</p>
             <div class="size-header">
                 <div class="size-title">SIZE</div>
-                <a href="/media/product_images/Sevaria_Size_Guide.pdf" class="size-guide-link" target="_blank">View Size Guide</a>
-
+                <a href="javascript:void(0);" class="size-guide-link" onclick="openSizeGuide()">View Size Guide</a>
+                
             </div>
             
             <div class="shop-product">
@@ -404,6 +458,33 @@
     });
 </script>
     
+<script>
+    // Get modal elements
+    var modal = document.getElementById("sizeGuideModal");
+    var closeButton = document.getElementById("sizeGuideClose");
+
+    // Function to open the modal
+    function openSizeGuide() {
+        modal.style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeSizeGuide() {
+        modal.style.display = "none";
+    }
+
+    // Close modal when the user clicks the close button (X)
+    closeButton.onclick = function() {
+        closeSizeGuide();
+    }
+
+    // Close modal when the user clicks outside of the modal content
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeSizeGuide();
+        }
+    }
+</script>
 
 
 
