@@ -1,0 +1,11 @@
+{% extends "navigation/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="w-full h-screen flex items-center justify-center text-center overflow-hidden menu_background relative">
+    <div class="absolute inset-0 flex items-center justify-center text-white">
+        <a href="{% url 'menu' %}" class="text-3xl font-bold">Menu</a>
+    </div>
+</div>
+
+{% endblock content %}

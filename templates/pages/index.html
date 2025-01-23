@@ -1,13 +1,9 @@
 {% extends "navigation/base.html" %}
+{% load static %}
 {% block content %}
 
-<div class="background-image">
-    <div class="overlay">
-        <!-- Your content goes here -->
-        <div class="content-index" id="content-index">
-            
-        </div>
-    </div>
+<div class="w-full h-screen flex items-center justify-center overflow-hidden">
+    <img src="{% static 'image/homepageimage.jpg' %}" alt="Background Image" class="w-full h-full object-cover object-center">
 </div>
 
 {% endblock content %}

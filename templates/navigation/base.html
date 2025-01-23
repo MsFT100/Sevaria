@@ -16,7 +16,12 @@
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" type="text/css" href=" {% static 'css/kaiadmin.min.css' %}">
-    
+    <!-- tailwind -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.cdnfonts.com/css/cooper-black" rel="stylesheet">
+
     <!-- inject:css -->
     <!-- endinject -->
     
@@ -25,6 +30,7 @@
     <link rel="icon" type="image/x-icon" href="{% static 'image/logo.svg'%}" />
     <!-- Fonts and icons -->
     <script src="{% static 'js/plugin/webfont/webfont.min.js'%} "></script>
+    
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -44,21 +50,21 @@
     </script>
     
 </head>
-<body>
+<body class="min-h-screen ">
+  <main class="flex-grow">
     
-    
-    
+    <div class="container">
       {% include "navigation/navigation.html" %}
-    <main class="container-full">
       {% block content %} {% endblock content %}
       
+    </div>
       <!-- Floating Cart Container -->
       <div class="cart-a-container" id="cart-a">
         <form id="payment-form" method="POST">
           {% csrf_token %}
           <span class="close-btn" onclick="closeCart()">×</span>
         </form>
-        
+          
         
         
 
@@ -80,9 +86,11 @@
             <button type="button" id="clear-cart-btn" class="checkout-btn">Clear Cart</button>
         </div> 
       </div>
+
+
     </main>
-      {% include 'navigation/footer.html' %}
-    
+    {% include 'navigation/footer.html' %}
+
   
     <!--   Core JS Files   -->
     <script src="{% static 'js/core/jquery-3.7.1.min.js '%} "></script>

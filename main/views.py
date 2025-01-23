@@ -21,6 +21,10 @@ class ShippingInfo( View):
     def get(self, request):
         
         return render(request, 'pages/shipping_info.html')
+class Menu( View):
+    def get(self, request):
+        
+        return render(request, 'pages/menu.html')
 class Error( View):
     def get(self, request):
         

@@ -1,8 +1,8 @@
 
 body {
     font-family: 'Rosario', sans-serif;
-    border: 1rem solid rgb(242 235 20);
-    background-color: #35722f !important;
+    border: 1rem solid #dc5342;
+    background-color: #dc5342 !important;
 }
 
 nav {
@@ -93,9 +93,19 @@ nav {
 }
 
 .brand {
-    text-align: center;
     flex: 1;
 }
+
+.brand a {
+    font-family: 'Cooper Black', sans-serif;
+    text-shadow: 10px 10px 5px rgba(0, 0, 0, 1); 
+    font-size: 80px;
+}
+
+.icon-size {
+    width: 140px;
+    height: 120px;
+  }
 
 .icons {
     display: flex;
