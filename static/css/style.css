@@ -1,19 +1,12 @@
 
 body {
     font-family: 'Rosario', sans-serif;
-    border: 1rem solid rgb(242 235 20);
-    background-color: #35722f !important;
+    border: 1rem solid #dc5342;
+    background-color: #dc5342 !important;
+    object-fit: cover;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    background-color: #be333300;
-    color: white;
-    
-}
+
 
 .dropdown {
     position: relative;
@@ -75,28 +68,164 @@ nav {
     transition: color 0.3s ease, background-color 0.3s ease;
     border-bottom: 2px solid transparent; /* Default border for the effect */
 }
-.hover-effect-title{
-    color: rgb(236 232 20);
-    text-decoration: none;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    border-bottom: 2px solid transparent;
-    font-size: x-large;
-}
-.hover-effect-title:hover{
-    color: white; /* Text color on hover */
-    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Blue underline on hover */
 
-}
-.hover-effect:hover {
-    color: white; /* Text color on hover */
-    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Blue underline on hover */
-}
-
-.brand {
+/* General Styles */
+.hover-effect-title:hover {
+    color: rgb(173, 154, 44); /* Text color on hover */
+    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Red underline on hover */
+  }
+  
+  .brand {
+    flex-grow: 1;
     text-align: center;
-    flex: 1;
+  }
+  
+  .brand a {
+    color: rgb(236 232 20);
+    font-family: 'Cooper Black', sans-serif;
+    text-shadow: 10px 10px 5px rgba(0, 0, 0, 1);
+    font-size: 6em;
+    white-space: nowrap;
+  }
+  
+  .icon-size {
+    width: 8em;
+    height: 8em;
+  }
+  
+  /* Responsive Navbar */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #dc5342 !important;
+    padding: 0 1em; /* Add padding to prevent overflow */
+  box-sizing: border-box;
+  position: relative;
+  }
+  
+  .menu-icon,
+  .cart-icon {
+    flex-shrink: 0;
+    position: absolute; /* Position icons to the left and right */
+    top: 50%;
+    transform: translateY(-50%);
+    }
+
+  .menu-icon {
+    left: 1em; /* Position menu icon on the left */
+  }
+  
+  .cart-icon {
+    right: 1em; /* Position cart icon on the right */
+  }
+  
+  /* Media Queries for Smaller Screens */
+@media (max-width: 1024px) {
+    .brand a {
+      font-size: 3.5em; /* Adjusted size for medium screens */
+    }
+
+
+
+  .menu_background {
+    background-image: url('/static/image/menu-backgroundmobile.jpg') !important;  /* Path to your image */
+    background-size: contain; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    width: 100vw; /* Ensure it fits the viewport width */
+    height: 100vh; /* Ensure it fits the viewport height */
+    max-width: 100%; /* Prevent horizontal overflow */
+    max-height: 100%; /* Prevent vertical overflow */
+    overflow: hidden !important;
+  }
+  
+    #carousel {
+        display: block;
+
+    }
+
+    .homepage-image {
+      display: none;
+  }
+  
+    .icon-size {
+      width: 6em;
+      height: 6em;
+    }
+
+  .carousel-item img {
+      width: 100vw; /* Maintain aspect ratio without distortion */
+      height: 100vh; /* Stretch to fit carousel height */
+  }
+
+  .menu_background {
+   
+    height: 100vh;
+    width: 100vw;
 }
 
+.carousel-item {
+  transition: opacity 1s ease-in-out !important;
+  opacity: 1;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.about-image {
+    width: 100vw !important;
+  
+}
+    
+  }
+  
+  @media (min-width: 1025px) {
+    #carousel {
+        display: none;
+    }
+}
+
+  @media (max-width: 768px) {
+    .brand a {
+      font-size: 2.5em; /* Adjusted size for tablets */
+    }
+  
+    .icon-size {
+      width: 3.5em;
+      height: 3.5em;
+    }
+
+    .carousel-item {
+      min-height: 100vh;
+    }
+  
+    .navbar {
+      padding: 0 0.5em; /* Reduce padding for smaller screens */
+      justify-content: space-between;
+    }
+    
+  }
+  
+  @media (max-width: 480px) {
+    .brand a {
+      font-size: 1.5em; /* Adjusted size for smaller screens */
+    }
+  
+    .icon-size {
+      width: 2.5em;
+      height: 2.5em;
+    }
+
+    .navbar {
+      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+      text-align: center;
+      justify-content: space-between;
+    }
+  }
+  
+    
 .icons {
     display: flex;
     align-items: center;
@@ -106,3 +235,5 @@ nav {
 .icon-link {
     margin-left: 5px;
 }
+
+

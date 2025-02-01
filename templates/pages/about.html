@@ -1,21 +1,41 @@
 {% extends "navigation/base.html" %}
 {% load static %}
 {% block content %}
-<div class="column-set">
-    <div class="column-unit" style="flex: 1 1 25%;">
-        <img class="zoomable" src="{% static 'image/jamie.jpg' %}" alt="Jamie Bryan Kimani" loading="lazy">
-        <h3>Jamie Bryan Kimani.</h3> 
-        <p>Creative Director</p>
+
+<div class="container">
+
+    <div class="about">
+        <h1>ABOUT</h1>
+    
+        <p class="about-text">
+            Sevaria is a contemporary fashion brand that artfully bridges the worlds of menswear and womenswear, embracing subtle elements of androgyny to redefine modern style. At its heart, Sevaria is a celebration of Afro-nostalgia—an exploration of African culture and heritage through a lens of timeless storytelling.
+
+            Our designs place a strong emphasis on textile and texture, featuring handwoven fabrics that honor the rich traditions of African craftsmanship. Sustainability is central to our practice, with up-cycled materials sourced from second-hand markets transformed into unique, one-of-a-kind creations. Each piece is a fusion of cultural narrative, artisanal techniques, and ethical design, embodying our commitment to thoughtful fashion.
+            
+            Sevaria was founded by designer Jamie Bryan Kimani, whose upbringing in Kiserian deeply influences his work. Drawing inspiration from the Maasai people, sub-religious groups like the Akorino, and his lived experiences, Jamie uses fashion to challenge gender stereotypes and craft meaningful stories. For him, storytelling is the soul of his creativity—a way to honor the past while shaping the future. 
+        </p>
+
+        <div class="max-w-sm about-image  rounded-lg ">
+            <a href="#">
+                <img src="{% static 'image/jamies_about.JPG' %}" alt="image">
+            </a>
+            <p class="text-center about-name">JAMIE BRYAN</p>
+            <p class="text-center about-title">Creative Director </p>
+        </div>
     </div>
-    <div class="column-unit-contact-info" style="flex: 1 1 25%;">
-        <span><a href="#" rel="history">→ Email:</a> <p>Sevariastudios@gmail.com</p></span>
-        <span><a href="https://www.instagram.com/sevaria.ke?igsh=MXMxN3gzN3c5dTg1aw==" target="_blank">→ Instagram:</a> <p>sevaria.ke</p></span>
-        <span><a href="#" target="_blank">→ Location:</a> <p>331 Hillcrest Drive (by appointment only)</p> </span>
-    </div>
-    <div class="column-unit brand-description" style="flex: 1 1 50%;">
-        <h1>Sevaria is a Kenyan based fashion brand exploring vernacular fashion and evoking afro-nostalgia.<br>
-        The brand was established in October 2020.</h1>
+    
+    <div class="social-media">
+        <a href="https://www.facebook.com/yourpage" target="_blank" class="social-icon">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/yourprofile" target="_blank" class="social-icon">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="tel:+1234567890" class="social-icon">
+            <i class="fa-solid fa-phone"></i>
+        </a>
     </div>
 </div>
+
 
 {% endblock content %}

@@ -1,13 +1,66 @@
 {% extends "navigation/base.html" %}
+{% load static %}
 {% block content %}
 
-<div class="background-image">
-    <div class="overlay">
-        <!-- Your content goes here -->
-        <div class="content-index" id="content-index">
+<div class="w-full h-screen flex items-center justify-center overflow-hidden  ">
+    <img src="{% static 'image/homepageimage.jpg' %}" alt="Background Image" class="w-full homepage-image  h-full object-cover object-center">
+</div>
+
+<div class="w-full h-screen flex items-center justify-center overflow-hidden lg:hidden">
+    <div id="carousel" class="w-full h-full" >
+        <div class="carousel-inner relative w-full overflow-hidden">
+            <!-- Carousel Item 1 -->
+            <div class="carousel-item active w-full h-full">
+                <img src="{% static 'image/carousel/carousel1.jpg' %}" alt="Image 1" class="w-full h-full object-cover object-center">
+            </div>
+            <!-- Carousel Item 2 -->
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel2.jpg' %}" alt="Image 2" class="w-full h-full object-cover object-center">
+            </div>
+            <!-- Carousel Item 3 -->
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel3.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel4.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel5.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel6.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel7.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel8.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel9.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel10.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel11.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel12.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel13.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel14.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="carousel-item w-full h-full">
+                <img src="{% static 'image/carousel/carousel15.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
+            </div>
             
         </div>
     </div>
 </div>
+
 
 {% endblock content %}

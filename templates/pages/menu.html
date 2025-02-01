@@ -1,0 +1,91 @@
+{% extends "navigation/base.html" %} {% load static %} {% block content %}
+
+<div class="container">
+  <div class="menu_background">
+    <!-- Menu positioned at the top -->
+    <div class="menu">
+      <p class="">menu</p>
+    </div>
+    <br />
+    <!-- Shop positioned as needed -->
+    <div class="home">
+      <a href="{% url 'home' %}" class="">
+        <span class="icon-left">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Left Icon"
+            class="menu-item-icon"
+          />
+        </span>
+        HOME
+        <span class="icon-right">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Right Icon"
+            class="menu-item-icon"
+          />
+        </span>
+      </a>
+    </div>
+
+    <div class="shop">
+      <a href="{% url 'shop' %}" class="">
+        <span class="icon-left">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Left Icon"
+            class="menu-item-icon"
+          />
+        </span>
+        SHOP
+        <span class="icon-right">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Right Icon"
+            class="menu-item-icon"
+          />
+        </span>
+      </a>
+    </div>
+
+    <div class="bags">
+      <a href="{% url 'Bags' %}" class="">
+        <span class="icon-left">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Left Icon"
+            class="menu-item-icon"
+          />
+        </span>
+        BAGS
+        <span class="icon-right">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Right Icon"
+            class="menu-item-icon"
+          />
+        </span>
+      </a>
+    </div>
+    <div class="about-menu">
+      <a href="{% url 'about' %}" class="">
+        <span class="icon-left">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Left Icon"
+            class="menu-item-icon"
+          />
+        </span>
+        ABOUT
+        <span class="icon-right">
+          <img
+            src="{% static 'image/menu_hover.svg' %}"
+            alt="Home Right Icon"
+            class="menu-item-icon"
+          />
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

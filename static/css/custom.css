@@ -8,7 +8,7 @@
 
 
 .content{
-    background-color: #35722f;
+    background-color: #dc5342 !important;
     width: 100%;
     height: 100%;
 }
@@ -189,17 +189,268 @@
     color: white;
 }
 
-.background-image {
-    position: relative;
-    width: 100%;
-    height: 130vh; /* Full viewport height */
-    background-image: url('/static/image/BackgroundImage.webp'); /* Replace with your image path */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent repeating the background image */
+
+
+.menu_background {
+    background-image: url('/static/image/menuimage.jpg'); /* Path to your image */
+    background-size: cover; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center; /* Center the content inside the container */
+    flex-direction: column; /* Align items vertically */
+    align-items: center; /* Align items to the start (left by default) */
+    justify-content: center; /* Align items from the top */
+    overflow: hidden; 
+    
+}
+
+ .shop, .bags, .about-menu, .home {
+    margin-top: 3em; /* Remove default margins */
+}
+
+ .shop a, .bags a, .about-menu a, .home a {
+    font-size: 3.5em;
+    color: #000;
+    font-weight: bolder;
+    text-decoration: none; /* Ensure links don't have underlines unless specified */
+    font-family: 'Cooper Black', sans-serif;
+
+}
+
+.menu p {
+    font-size: 3.5em;
+    color: #000;
+    font-weight: bolder;
+    font-family: 'Cooper Black', sans-serif;
+    display: inline-block; /* Ensures the border matches text width */
+    border-bottom: 5px solid black; /* Creates a long underline */
+    width: 100%; /* Makes the underline span the full width */
+    text-align: center; /* Centers the text */
+}
+
+.menu-item-icon {
+    width: 1em; /* Adjust size as needed */
+    height: 1em;
+    display: inline-block; /* Ensures the icons stay inline */
+    vertical-align: middle; /* Aligns the icons with the text */
+    margin: 0 5px; /* Adds spacing between the icon and text */
+}
+
+.icon-left {
+    margin-right: 0.5em; /* Space between the icon and the text */
+}
+
+.icon-right {
+    margin-left: 0.5em; /* Space between the icon and the text */
+}
+
+.icon-left, .icon-right {
+    font-size: 2em;
+    opacity: 0; /* Initially hide the icons */
+    transition: opacity 0.3s ease; /* Smoothly show and hide icons */
+    size: 2em;
+}
+
+.menu a:hover .icon-left,
+.menu a:hover .icon-right,
+.home a:hover .icon-left,
+.home a:hover .icon-right,
+.shop a:hover .icon-left,
+.shop a:hover .icon-right,
+.bags a:hover .icon-left,
+.bags a:hover .icon-right,
+.about-menu a:hover .icon-left,
+.about-menu a:hover .icon-right {
+    opacity: 1; /* Make the icons visible on hover */
+    color: #ffcc00; /* Change color on hover */
+}
+
+/* Mobile-specific styling */
+@media (max-width: 768px) {
+    .menu_background {
+        background-image: url('/static/image/menuimage.jpg'); /* Path to your image */
+        background-size: cover; /* Ensure the image covers the entire container */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent tiling */
+        min-height: 100%;
+        overflow-y: auto; /* Enable vertical scrolling if needed */
+    }
+
+   
+
+    .menu a, .shop a, .bags a, .about-menu a, .home a {
+        font-size: 1.5em; /* Further reduce font size */
+        flex-direction: column; /* Stack text and icons */
+
+    }
+
+    .menu p {
+        font-size: 1.5em; /* Further reduce font size */
+        flex-direction: column; /* Stack text and icons */
+
+    }
+
+    .menu-item-icon {
+        width: 1em; /* Reduce icon size */
+        height: 1em;
+    }
+
+    .icon-left, .icon-right {
+        margin: 0; /* Remove extra spacing */
+        opacity: 0; /* Initially hide the icons */
+        transition: opacity 0.3s ease;
+    }
+    .menu a:hover .icon-left,
+    .menu a:hover .icon-right,
+    .home a:hover .icon-left,
+    .home a:hover .icon-right,
+    .shop a:hover .icon-left,
+    .shop a:hover .icon-right,
+    .bags a:hover .icon-left,
+    .bags a:hover .icon-right,
+    .about-menu a:hover .icon-left,
+    .about-menu a:hover .icon-right {
+        opacity: 1; /* Make the icons visible on hover */
+        color: #ffcc00; /* Change color on hover */
+    }
+
+    .about-image {
+        width: 80%; /* Increases width on smaller screens */
+    }
+
+    .about-name, .about-title {
+        font-size: 1.5em; /* Adjusts text size for better readability */
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .menu_background {
+        background-image: url('/static/image/menuimage.jpg'); /* Path to your image */
+        background-size: cover; /* Ensure the image covers the entire container */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent tiling */
+        min-height: 100%;
+        overflow-y: auto; /* Enable vertical scrolling if needed */
+    }
+
+   
+
+    .menu a, .shop a, .bags a, .about-menu a, .home a {
+        font-size: 1.5em; /* Further reduce font size */
+        flex-direction: column; /* Stack text and icons */
+
+    }
+
+    .menu p {
+        font-size: 1.5em; /* Further reduce font size */
+        flex-direction: column; /* Stack text and icons */
+
+    }
+
+    .menu-item-icon {
+        width: 1em; /* Reduce icon size */
+        height: 1em;
+    }
+
+    .icon-left, .icon-right {
+        margin: 0; /* Remove extra spacing */
+        opacity: 0; /* Initially hide the icons */
+        transition: opacity 0.3s ease;
+    }
+    .menu a:hover .icon-left,
+    .menu a:hover .icon-right,
+    .home a:hover .icon-left,
+    .home a:hover .icon-right,
+    .shop a:hover .icon-left,
+    .shop a:hover .icon-right,
+    .bags a:hover .icon-left,
+    .bags a:hover .icon-right,
+    .about-menu a:hover .icon-left,
+    .about-menu a:hover .icon-right {
+        opacity: 1; /* Make the icons visible on hover */
+        color: #ffcc00; /* Change color on hover */
+    }
+
+    .about-image {
+        width: 90%; /* Even larger on very small screens */
+        max-width: 350px;
+
+    }
+
+    .about-name, .about-title {
+        font-size: 1em; /* Slightly smaller for better fit */
+    }
+}
+.about {
+    display: flex;
+    flex-direction: column; /* Ensures items are stacked vertically */
+    align-items: center; /* Centers items horizontally */
+    text-align: center; /* Centers the text within the elements */
+    min-height: 100vh; /* Makes the div fill the full viewport height */
+}
+
+.about h1 {
+    margin-bottom: 20px; /* Adds space below the heading */
+    font-family: 'Cooper Black', sans-serif;
+    text-shadow: 10px 10px 5px rgb(255, 220, 20); 
+    color: #000;
+    font-size: 5em;
+}
+
+.about-image {
+    display: flex;
+    flex-direction: column; /* Aligns child elements (images) vertically */
+    align-items: center; /* Centers the images horizontally */
+    margin-top: 3em;
+    width: 30%;
+    
+}
+
+.about-name {
+    color: #000 !important;
+    font-family: 'Cooper Black', sans-serif;
+    font-size: 2.5em;
+}
+
+.about-title {
+    color: #f7f4dd !important;
+    font-size: 2.5em;
+    font-family: Garamond, serif;
+    
+
+}
+
+.about-image img {
+    width: 100%; /* Ensures the images scale to fit the container */
+    height: auto; /* Maintains the aspect ratio of the images */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow */
+}
+
+.about-text {
+    line-height: 1.6; /* Improves text readability */
+    color: #f7f4dd;;
+    font-size: 1.5em;
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.social-icon {
+    font-size: 2em;
+    color: #fcf8d3;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-icon:hover {
+    color: #ffcc00; /* Change color on hover */
 }
 
 
@@ -222,21 +473,7 @@
 }
 
 
-/* Cart Icon */
-.cart-icon {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    font-size: 24px;
-}
+
 /* Floating Cart */
 .cart-a-container {
     position: fixed;
@@ -399,25 +636,13 @@
         
         
     }
-    .background-image {
-        /* Full viewport height */
-        background-image: url('/static/image/backgroundMobile.webp'); /* Replace with your image path */
-        background-size: cover; /* Cover the entire container */
-        background-position: center; /* Center the background image */
-        background-repeat: no-repeat; /* Prevent repeating the background image */
-        
-    }
+
 
     .container-full{
         height: max-content;
     }
 }
-@media screen and (max-width: 991.5px) {
-    .container, .container-full {
-        height: max-content;
-    }
-}
-.zoomable { 
+zoomable { 
     border-radius: 10px; 
 
 }

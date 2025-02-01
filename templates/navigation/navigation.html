@@ -1,27 +1,21 @@
 {% load static %}
 {% block content %}
+<div class="container">
+  <div class="navbar flex items-center justify-between space-x-4">
+    <!-- Menu Icon -->
+    <a href="{% url 'menu' %}" class="menu-icon">
+      <img src="{% static 'image/menu_icon.svg' %}" alt="Brand Icon" class="icon-size">
+    </a>
 
-<header>
-  <nav>
-    <div class="dropdown">
-      <a href="#" id="dropdownMenu" class="hover-effect">&#9776;</a>
-      <div class="dropdown-content">
-        <a href="{% url 'home' %}">Home </a>
-        <a href="{% url 'shop' %}">Shop </a>
-        <a href="{% url "Bags" %}">Bags </a>
-      </div>
+    <!-- Brand Title -->
+    <div class="brand text-center">
+      <a href="{% url 'home' %}" class="hover-effect-title">SEVARIA FASHIONS</a>
     </div>
-    
-    <div class="brand">
-      <a href="{% url 'about' %}" class="hover-effect-title">SEVARIA FASHIONS  &#8599;</a>
-    </div>
-    
-    <div class="icons">
-      
-      <a href="#" class="hover-effect" ><i class="fa fa-shopping-cart" onclick="openCart()"></i></a>
-    </div>
-  </nav>
-  
-</header>
 
+    <!-- Cart Icon -->
+    <a href="#" class="cart-icon">
+      <img src="{% static 'image/cart_icon.svg' %}" alt="Shopping Cart" class="icon-size" onclick="openCart()">
+    </a>
+  </div>
+</div>
 {% endblock content %}
