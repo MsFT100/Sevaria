@@ -13,7 +13,8 @@ class ProductVariantInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline]
-    list_display = ['name', 'price']
+    list_display = ('name', 'price', 'collection')
+    list_filter = ('collection',)
 
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):

@@ -85,17 +85,17 @@ WSGI_APPLICATION = 'sevaria.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': env('DB_ENGINE', default='django.db.backends.mysql'),
-        'NAME': env('DB_NAME', default='sDB'),
-        'USER': env('DB_USER', default='sevariac'),
-        'PASSWORD': env('DB_PASSWORD', default='S'),
-        'HOST': env('DB_HOST', default='sevaria.co.ke'),
-        'PORT': env('DB_PORT', default='3306'),
-        'OPTIONS': {
-            'init_command': env('DB_OPTIONS', default="SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'")
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': env('DB_ENGINE', default='django.db.backends.mysql'),
+        # 'NAME': env('DB_NAME', default='sDB'),
+        # 'USER': env('DB_USER', default='sevariac'),
+        # 'PASSWORD': env('DB_PASSWORD', default='S'),
+        # 'HOST': env('DB_HOST', default='sevaria.co.ke'),
+        # 'PORT': env('DB_PORT', default='3306'),
+        # 'OPTIONS': {
+        #     'init_command': env('DB_OPTIONS', default="SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'")
+        # },
     }
 }
 

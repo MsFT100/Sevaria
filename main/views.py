@@ -66,12 +66,31 @@ class SuccessPage(View):
 
 class Shop(View):
     def get(self, request):
-        products = Product.objects.filter(Q(category='Dress') | Q(category='Shirt') | Q(category='Skirt') | Q(category='T-Shirts'))
-        return render(request, 'pages/shop.html', {'products': products})
+        collections = [
+            {
+                'name': 'Collection A',
+                'products': Product.objects.filter(collection='COLLECTION_A'),
+                'columns_per_row': 5,
+                "bg_color": "#f57e5e"
+            },
+            {
+                'name': 'Collection B',
+                'products': Product.objects.filter(collection='COLLECTION_B'),
+                'columns_per_row': 5,
+                "bg_color": "#e8dd67"
+            },
+            {
+                'name': 'Collection C',
+                'products': Product.objects.filter(collection='COLLECTION_C'),
+                'columns_per_row': 5,
+                "bg_color": "#207a7a"
+            },
+        ]
+        return render(request, 'pages/shop.html',{'collections': collections})
 
 class Bags(View):
     def get(self, request):
-        products = Product.objects.filter(category='Bags')
+        products = Product.objects.filter(category__iexact='Bags')
         return render(request, 'pages/bags.html', {'products': products})
     
 class ProductDetail(DetailView):
@@ -171,16 +190,14 @@ def cart_view(request):
     cart_items = []
 
     for item in cart.values():
-        # Get the product based on the product_id in the cart
         product = get_object_or_404(Product, id=item['product_id'])
-        
-        # Append the product details along with the cart item data
         cart_items.append({
             'name': product.name,
             'price': str(product.price),
             'quantity': item['quantity'],
             'size': item['size'],
             'color': item['color'],
+            'category': product.category,  # Add this if your Product model has a category field
             'image_url': product.image.url if product.image else '/static/default-image.jpg'
         })
 

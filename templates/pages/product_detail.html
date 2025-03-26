@@ -6,28 +6,32 @@
     /* Container for the product detail */
     .product-detail {
         display: flex;
-        flex: auto;
-        justify-content: space-evenly;
-        
-        max-width: 1200px;
-        padding: 0.4rem;
-
+        margin: auto;
+        padding: 2rem;
+        align-items: center;
     }
 
-    /* Product images section */
+    /* Left Section - Product Images */
     .product-images {
         flex: 1;
-        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .divider-product {
+        width: 2px;
+        height: 70vh;
+        background-color: white;
+        margin: 0 2rem;
     }
 
     .main-product-image {
-        width: 100%;
-        border-radius: 8px;
-        object-fit: cover;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        height: auto;
+        width: 80%;
     }
 
-    .thumbnails {
+
+    /* .thumbnails {
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
@@ -41,18 +45,25 @@
         border-radius: 8px;
         cursor: pointer;
         box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-    }
+    } */
 
     /* Product information section */
     .product-info {
         flex: 1;
+        color: white;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 1rem;
     }
 
-    
+    .title-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
     .product-subtitle {
         font-size: 18px;
         color: white;
@@ -115,14 +126,49 @@
         color: #666;
     }
 
+    .product-description {
+        margin: 1rem 0;
+        line-height: 1.5;
+    }
+
+    .size-section {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+
+    .add-to-cart {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-top: 2rem;
+        text-align: center;
+        border-radius: 20px;
+    }
+
+    .add-to-cart:hover {
+        background: white;
+        color: black;
+    }
+
     
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .product-detail {
-            flex-direction: column;
-        }
+        flex-direction: column;
+        width: 90%; /* Increased width for better spacing */
+        margin: auto; /* Center the content */
+        overflow: hidden;
+    }
 
+    .product-info {
+        width: 70vw;
+    }
         .product-images {
             margin-bottom: 1rem;
         }
@@ -135,6 +181,49 @@
             width: 60px;
             height: 60px;
         }
+
+        .divider-product {
+            width: 100%;
+            height: 2px;
+            margin: 1.5rem 0;
+        }
+
+        .title-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+.product-name {
+    flex: 1;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.product-price {
+    flex: 1;
+    text-align: right;
+    color: white;
+}
+
+
+    .size-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1.5rem;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .add-to-cart-btn {
+        width: 50%;
+        margin: 20px auto; /* Center the button */
+        display: block;
+    }
+        
     }
 
     /* Sliding sidebar */
@@ -264,43 +353,30 @@
     </div>
     
     <div class="product-detail">
+        <!-- Left: Product Images -->
         <div class="product-images">
-            <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" class="main-product-image">
-            <div class="thumbnails">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
-                <img src="{{ product.alternate_image.url }}" alt="{{ product.name }}" onclick="changeImage(this)">
-                <!-- Add more thumbnails if needed -->
-                
-            </div>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="main-product-image">
+            <img src="{{ product.alternate_image.url }}" alt="{{ product.name }}" class="main-product-image">
         </div>
-        
+    
+        <!-- Vertical Divider -->
+        <div class="divider-product"></div>
+    
+        <!-- Right: Product Information -->
         <div class="product-info">
-            <div class="product-subtitle">Exclusive Made to Order</div> 
-            <h1>{{ product.name }}</h1>
-            <p class="price">Price: ${{ product.price }}</p>
-            <p class="fabric-composition">Fabric composition: {{ product.description }}</p>
-            <div class="size-header">
-                <div class="size-title">SIZE</div>
-                <!--<a href="javascript:void(0);" class="size-guide-link" onclick="openSizeGuide()">View Size Guide</a>-->
-                <a class="size-title-a" href="/static/image/Sevaria_Size_Guide.pdf" target="_blank">Size Guide</a>
-            </div>
-            
-            <div class="shop-product">
-                <!-- Display product sizes if available -->
-                {% if product.size %}
-                    <p class="sizes">Available Sizes: {{ product.size }}</p>
-                {% endif %}
-
-                <ul>
-                    {% for variant in product.variants.all %}
-                        <li>{{ variant.size }} - {{ variant.color }} - Stock: {{ variant.stock }}</li>
-                    {% endfor %}
-                </ul>
-                
-                
-                    <button type="button"  class="btn btn-dark" onclick="openSidebar()">Add to Cart</button>
+            <div class="title-price">
+                <span class="product-name">{{ product.name }}</span>
+                <span class="product-price">${{ product.price }}</span>
                 
             </div>
+            <p class="product-description">{{ product.description }}</p>
+    
+            <div class="size-section">
+                <span>SIZE</span>
+                <a href="/static/image/Sevaria_Size_Guide.pdf" class="size-guide-link">Size Guide</a>
+            </div>
+    
+            <button onclick="openSidebar()" class="add-to-cart">ADD TO CART</button>
         </div>
     </div>
 </div>
