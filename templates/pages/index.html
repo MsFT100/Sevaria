@@ -2,65 +2,86 @@
 {% load static %}
 {% block content %}
 
-<div class="w-full h-screen flex items-center justify-center overflow-hidden  ">
-    <img src="{% static 'image/homepageimage.webp' %}" alt="Background Image" class="w-full homepage-image  h-full object-cover object-center">
-</div>
+ <!--HTML CODE-->
+ <div class="w-full relative h-full overflow-hidden swiper-desktop">
+    <div class="swiper vertical-slide-carousel swiper-container relative h-96">
+    <div class="swiper-wrapper">
+     <div class="swiper-slide">
+       <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+        <img src="{% static 'image/homepageimage2.png' %}" alt="Background Image" class="w-full homepage-image  h-full object-cover object-center">
+        <a href="{% url 'shop' %}" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </a>       
+    </div>
+     </div>
+     <div class="swiper-slide">
+       <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+        <img src="{% static 'image/homepageimage.png' %}" alt="Background Image" class="w-full homepage-image  h-full object-cover object-center">       
+    </div>
+     </div>
+    
+    </div>
+    <div class="swiper-pagination !right-10 !left-full !top-1/3 !translate-y-8"></div>
+    </div>
+    </div>
 
-<div class="w-full h-screen flex items-center justify-center overflow-hidden lg:hidden">
-    <div id="carousel" class="w-full h-full" >
-        <div class="carousel-inner relative w-full overflow-hidden">
-            <!-- Carousel Item 1 -->
-            <div class="carousel-item active w-full h-full">
-                <img src="{% static 'image/carousel/carousel1.jpg' %}" alt="Image 1" class="w-full h-full object-cover object-center">
+<!-- Mobile Swiper -->
+<div class="w-full relative h-full overflow-hidden swiper-mobile">
+    <div class="swiper mobile-slide-carousel swiper-container relative h-96">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide relative">
+                <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center relative">
+                    <img src="{% static 'image/homepage-mobile.png' %}" alt="Mobile Image 1" class="w-full h-full object-cover object-center">
+                    <!-- Collection Name on Left Side -->
+                    <div class="absolute left-4 top-1/3 transform -translate-y-1/2 text-white font-bold text-lg">
+                        COLLECTION A
+                    </div>
+                    <!-- Arrow Button -->
+                    <a href="{% url 'shop' %}" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <!-- Carousel Item 2 -->
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel2.jpg' %}" alt="Image 2" class="w-full h-full object-cover object-center">
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide relative">
+                <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center relative">
+                    <img src="{% static 'image/homepage-mobile2.png' %}" alt="Mobile Image 2" class="w-full h-full object-cover object-center">
+                    <!-- Collection Name on Left Side -->
+                    <div class="absolute left-4 top-1/3 transform -translate-y-1/2 text-white font-bold text-lg">
+                        COLLECTION B
+                    </div>
+                    <!-- Arrow Button -->
+                    <a href="{% url 'shop' %}" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <!-- Carousel Item 3 -->
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel3.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel4.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel5.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel6.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel7.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel8.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel9.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel10.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel11.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel12.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel13.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel14.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            <div class="carousel-item w-full h-full">
-                <img src="{% static 'image/carousel/carousel15.jpg' %}" alt="Image 3" class="w-full h-full object-cover object-center">
-            </div>
-            
+        </div>
+        
+        <!-- Custom Text Pagination -->
+        <div class="custom-pagination flex flex-col absolute top-1/3 right-4 z-50 space-y-3">
+            <span class="pagination-btn text-white font-bold cursor-pointer" data-index="0">COLLECTION A</span>
+            <span class="pagination-btn text-white font-bold cursor-pointer" data-index="1">COLLECTION B</span>
+        </div>
+
+        <!-- Swipe Down Instruction -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm z-50 bg-black bg-opacity-50 px-2 py-1 rounded pointer-events-none">
+            Swipe down for COLLECTION B
         </div>
     </div>
 </div>
+
+
+
+
 
 
 {% endblock content %}

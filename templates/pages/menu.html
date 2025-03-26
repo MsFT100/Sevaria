@@ -1,13 +1,10 @@
 {% extends "navigation/base.html" %} {% load static %} {% block content %}
 
-<div class="container">
   <div class="menu_background">
-    <!-- Menu positioned at the top -->
     <div class="menu">
       <p class="">menu</p>
     </div>
     <br />
-    <!-- Shop positioned as needed -->
     <div class="home">
       <a href="{% url 'home' %}" class="">
         <span class="icon-left">
@@ -85,7 +82,6 @@
           />
         </span>
       </a>
-    </div>
   </div>
 </div>
 {% endblock content %}

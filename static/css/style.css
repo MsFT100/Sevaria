@@ -72,7 +72,6 @@ body {
 /* General Styles */
 .hover-effect-title:hover {
     color: rgb(173, 154, 44); /* Text color on hover */
-    border-bottom: 2px solid rgba(255, 37, 37, 0.97); /* Red underline on hover */
   }
   
   .brand {
@@ -115,10 +114,82 @@ body {
   .menu-icon {
     left: 1em; /* Position menu icon on the left */
   }
+
   
   .cart-icon {
     right: 1em; /* Position cart icon on the right */
   }
+
+.swiper-wrapper {
+  width: 100%;
+  height: max-content !important;
+  padding-bottom: 64px !important;
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+  position: relative;
+  }
+  .swiper-pagination-bullet {
+  background: #4F46E5;
+  }
+  .swiper-pagination-bullet-active {
+  background: #4F46E5 !important;
+  }
+
+  .swiper-container {
+    height: 100vh !important;
+}
+
+.swiper-mobile {
+  display: none !important;
+}
+
+.custom-pagination {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pagination-btn {
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease-in-out;
+  z-index: 50;
+  padding: 5px 10px;  /* Increases padding to create an oval effect */
+  border: 2px solid white; /* White border */
+  border-radius: 50px; /* ✅ Makes the border oval */
+  background: transparent; /* Keep background transparent */
+  text-align: center;
+  font-weight: bold;
+}
+
+.pagination-btn:hover {
+  color: black;
+}
+
+.swiper-slide {
+  position: relative !important;
+  z-index: 10 !important;  /* Ensure slides stay behind text */
+}
+
+.swiper-slide a {
+  transition: transform 0.3s ease-in-out;
+}
+
+.swiper-slide a:hover {
+  transform: scale(1.2);
+}
+
+.swiper-slide img {
+  position: relative;
+  z-index: 1;  /* Keeps the image below text */
+}
+
+.swiper-slide .absolute {
+  z-index: 50 !important; 
+}
   
   /* Media Queries for Smaller Screens */
 @media (max-width: 1024px) {
@@ -126,10 +197,17 @@ body {
       font-size: 3.5em; /* Adjusted size for medium screens */
     }
 
-
+    .swiper-desktop {
+      display: none !important;; 
+  }
+  .swiper-mobile {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 
   .menu_background {
-    background-image: url('/static/image/menu-backgroundmobile.jpg') !important;  /* Path to your image */
+    background-image: url('/static/image/menuimage-mobile.png') !important;  /* Path to your image */
     background-size: contain; /* Ensure the image covers the entire container */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent tiling */
@@ -139,11 +217,6 @@ body {
     max-height: 100%; /* Prevent vertical overflow */
     overflow: hidden !important;
   }
-  
-    #carousel {
-        display: block;
-
-    }
 
     .homepage-image {
       display: none;
@@ -154,25 +227,12 @@ body {
       height: 6em;
     }
 
-  .carousel-item img {
-      width: 100vw; /* Maintain aspect ratio without distortion */
-      height: 100vh; /* Stretch to fit carousel height */
-  }
-
   .menu_background {
    
     height: 100vh;
     width: 100vw;
 }
 
-.carousel-item {
-  transition: opacity 1s ease-in-out !important;
-  opacity: 1;
-}
-
-.carousel-item.active {
-  opacity: 1;
-}
 
 .about-image {
     width: 100vw !important;
@@ -181,11 +241,6 @@ body {
     
   }
   
-  @media (min-width: 1025px) {
-    #carousel {
-        display: none;
-    }
-}
 
   @media (max-width: 768px) {
     .brand a {
@@ -197,9 +252,12 @@ body {
       height: 3.5em;
     }
 
-    .carousel-item {
-      min-height: 100vh;
-    }
+    .swiper-desktop {
+      display: none !important;; 
+  }
+  .swiper-mobile {
+      display: block !important;;
+  }
   
     .navbar {
       padding: 0 0.5em; /* Reduce padding for smaller screens */
@@ -223,7 +281,15 @@ body {
       text-align: center;
       justify-content: space-between;
     }
+    .swiper-desktop {
+      display: none !important;; 
   }
+  .swiper-mobile {
+      display: block !important;;
+  }
+  }
+
+ 
   
     
 .icons {

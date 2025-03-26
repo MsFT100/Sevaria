@@ -13,12 +13,19 @@ class Product(models.Model):
         ('SHIRTS', 'Shirts'),
         ('SKIRTS', 'Skirts'),
     ]
+    COLLECTIONS = [
+        ('COLLECTION_A', 'Collection A'),
+        ('COLLECTION_B', 'Collection B'),
+        ('COLLECTION_C', 'Collection C'),
+    ]
     name = models.CharField(max_length=255)
     description = models.TextField(default='null')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=50, choices=CATEGORY, default='DRESS')
     image = models.ImageField(upload_to='product_images/')
     alternate_image = models.ImageField(upload_to='product_images/')
+    collection = models.CharField(max_length=50, choices=COLLECTIONS, default='COLLECTION_A')
+
 
     def __str__(self):
         return self.name

@@ -10,27 +10,31 @@
 </style>
 
 
-    <div class="content">
-        <div class="product-grid">
-            {% for product in products %}
-                <a href="{% url 'product_detail' product.id %}" class="product-card-link">
-                    <div class="product-card">
-                        {% if product.image %}
-                            <img data-src=""src="{{ product.image.url }}" alt="{{ product.name }}" class="lazyload">
-                        {% else %}
-                            <img data-src="{% static 'img/logoproduct.png' %}" alt="Default Image" class="lazyload">
-                        {% endif %}
-                        <div class="caption">
-                            <h6>{{ product.name }}</h6>
-                            <p><strong>${{ product.price }}</strong></p>
+<div class="content">
+    {% for collection in collections %}
+            <div class="collection-container hidden" style="background-color: {{ collection.bg_color }};">
+            <h2 class="collection-title">{{ collection.name }}</h2>
+            <div class="grid-container grid_{{ collection.columns_per_row }}">
+                {% for product in collection.products %}  <!-- Limit to 5 items per row -->
+                    <a href="{% url 'product_detail' product.id %}" class="product-card-link">
+                        <div class="product-card">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/default-image.jpg' %}" alt="Default Image">
+                            {% endif %}
+                            <div class="caption">
+                                <h6>{{ product.name }}</h6>
+                                <p><strong>${{ product.price }}</strong></p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            {% empty %}
-                <p>No products available at the moment.</p>
-            {% endfor %}
+                    </a>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endfor %}
+</div>
+
 
 
 
@@ -60,6 +64,40 @@
         // Also trigger animation on page load
         showCardsOnScroll();
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    let collections = document.querySelectorAll('.collection-container');
+    let currentIndex = 0;
+
+    function showCollection(index) {
+        collections.forEach((collection, i) => {
+            collection.classList.toggle('active', i === index);
+        });
+    }
+
+    showCollection(currentIndex); // Show first collection initially
+
+    window.addEventListener("wheel", function (event) {
+        let currentCollection = collections[currentIndex];
+
+        if (event.deltaY > 0) { // Scrolling down
+            if (currentCollection.scrollTop + currentCollection.clientHeight >= currentCollection.scrollHeight - 5) {
+                if (currentIndex < collections.length - 1) {
+                    currentIndex++;
+                    showCollection(currentIndex);
+                }
+            }
+        } else if (event.deltaY < 0) { // Scrolling up
+            if (currentCollection.scrollTop <= 0) {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    showCollection(currentIndex);
+                }
+            }
+        }
+    });
+});
+
 </script>
 
 {% endblock content %}
