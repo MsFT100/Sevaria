@@ -68,16 +68,24 @@
     document.addEventListener("DOMContentLoaded", function () {
     let collections = document.querySelectorAll('.collection-container');
     let currentIndex = 0;
+    let isThrottled = false; 
 
     function showCollection(index) {
-        collections.forEach((collection, i) => {
-            collection.classList.toggle('active', i === index);
-        });
-    }
+    collections.forEach((collection, i) => {
+        if (i === index) {
+            collection.classList.add('active');
+        } else {
+            collection.classList.remove('active');
+        }
+    });
+}
+
 
     showCollection(currentIndex); // Show first collection initially
 
     window.addEventListener("wheel", function (event) {
+        if (isThrottled) return;
+
         let currentCollection = collections[currentIndex];
 
         if (event.deltaY > 0) { // Scrolling down
@@ -85,6 +93,7 @@
                 if (currentIndex < collections.length - 1) {
                     currentIndex++;
                     showCollection(currentIndex);
+                    throttleScroll();
                 }
             }
         } else if (event.deltaY < 0) { // Scrolling up
@@ -92,10 +101,18 @@
                 if (currentIndex > 0) {
                     currentIndex--;
                     showCollection(currentIndex);
+                    throttleScroll();
                 }
             }
         }
     });
+
+    function throttleScroll() {
+    isThrottled = true;
+    setTimeout(() => {
+        isThrottled = false;
+    }, 2000); // Adjust for how long you want between scrolls
+}
 });
 
 </script>
