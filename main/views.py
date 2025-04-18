@@ -68,19 +68,19 @@ class Shop(View):
     def get(self, request):
         collections = [
             {
-                'name': 'Collection A',
+                'name': 'Safarini Collection',
                 'products': Product.objects.filter(collection='COLLECTION_A'),
                 'columns_per_row': 5,
                 "bg_color": "#f57e5e"
             },
             {
-                'name': 'Collection B',
+                'name': 'Parish Collection',
                 'products': Product.objects.filter(collection='COLLECTION_B'),
                 'columns_per_row': 5,
                 "bg_color": "#e8dd67"
             },
             {
-                'name': 'Collection C',
+                'name': 'One of Ones',
                 'products': Product.objects.filter(collection='COLLECTION_C'),
                 'columns_per_row': 5,
                 "bg_color": "#207a7a"
