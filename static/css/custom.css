@@ -698,10 +698,7 @@ background-color: #e17634;
     min-width: 80px; /* Ensures it stays aligned properly */
     font-size: 30px;
     font-family: 'Cooper Black', sans-serif;
-
 }
-
-
 
 .cart-item-details {
     display: flex;
