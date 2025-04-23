@@ -95,7 +95,7 @@ DATABASES = {
         'PORT': env('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': env('DB_OPTIONS', default="SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'")
-        }, 
+        },
     }
 }
 
