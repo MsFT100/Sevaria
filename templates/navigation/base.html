@@ -244,7 +244,9 @@
       const cartItemsContainer = document.getElementById('cartItems');
       cartItemsContainer.innerHTML = ''; // Clear existing items
       
-      fetch('/get-cart-items/')  // An endpoint to get the cart items
+      fetch('/get-cart-items/', {
+    credentials: 'same-origin'
+})  // An endpoint to get the cart items
           .then(response => response.json())
           .then(data => {
             console.log('Cart data:', data);
