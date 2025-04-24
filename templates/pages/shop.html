@@ -124,17 +124,24 @@
         if (isThrottled) return;
 
         const swipeDistance = touchStartY - touchEndY;
+        const currentCollection = collections[currentIndex];
 
-        if (swipeDistance > 50 && currentIndex < collections.length - 1) {
-            // Swipe up
-            currentIndex++;
-            showCollection(currentIndex);
-            throttleScroll();
-        } else if (swipeDistance < -50 && currentIndex > 0) {
-            // Swipe down
-            currentIndex--;
-            showCollection(currentIndex);
-            throttleScroll();
+        if (swipeDistance > 50) {
+            if (currentCollection.scrollTop + currentCollection.clientHeight >= currentCollection.scrollHeight - 10) {
+                if (currentIndex < collections.length - 1) {
+                    currentIndex++;
+                    showCollection(currentIndex);
+                    throttleScroll();
+                }
+            }
+        } else if (swipeDistance < -50) {
+            if (currentCollection.scrollTop <= 0) {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    showCollection(currentIndex);
+                    throttleScroll();
+                }
+            }
         }
     }
 

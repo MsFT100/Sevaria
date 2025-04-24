@@ -33,44 +33,52 @@
         <div class="swiper-wrapper">
             <!-- Slide 1 -->
             <div class="swiper-slide relative">
+               
                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center relative">
+                    <a href="{% url 'shop' %}" class="block w-full h-full relative">
                     <img src="{% static 'image/homepage-mobile.png' %}" alt="Mobile Image 1" class="w-full h-full object-cover object-center">
                     <!-- Collection Name on Left Side -->
                     <div class="absolute left-4 top-1/3 transform -translate-y-1/2 text-white font-bold text-lg">
                         SAFARINI COLLECTION
                     </div>
                     <!-- Arrow Button -->
-                    <a href="{% url 'shop' %}" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+                    <div  class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
+                    </div>
                     </a>
                 </div>
+                
             </div>
 
             <!-- Slide 2 -->
             <div class="swiper-slide relative">
+               
                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center relative">
+                    <a href="{% url 'shop' %}" class="block w-full h-full relative">
                     <img src="{% static 'image/homepage-mobile2.png' %}" alt="Mobile Image 2" class="w-full h-full object-cover object-center">
                     <!-- Collection Name on Left Side -->
                     <div class="absolute left-4 top-1/3 transform -translate-y-1/2 text-white font-bold text-lg">
                         PARISH COLLECTION 
                     </div>
                     <!-- Arrow Button -->
-                    <a href="{% url 'shop' %}" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+                    <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
+                    </div>
                     </a>
                 </div>
+            
             </div>
         </div>
         
         <!-- Custom Text Pagination -->
-        <div class="custom-pagination flex flex-col absolute top-1/3 right-4 z-50 space-y-3">
-            <span class="pagination-btn text-white font-bold cursor-pointer" data-index="0">SATARINI COLLECTION</span>
+        <!-- <div class="custom-pagination flex flex-col absolute top-1/3 right-4 z-50 space-y-3">
+            <span class="pagination-btn text-white font-bold cursor-pointer" data-index="0">SAFARINI COLLECTION</span>
             <span class="pagination-btn text-white font-bold cursor-pointer" data-index="1">PARISH COLLECTION</span>
-        </div>
+        </div> -->
 
         <!-- Swipe Down Instruction -->
         <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm z-50 bg-black bg-opacity-50 px-2 py-1 rounded pointer-events-none">
